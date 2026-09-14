@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which Difference-in-Differences Estimator Should I Use? | Credible Answers</title>
+<meta name="description" content="A practical guide to choosing among modern Difference-in-Differences estimators for TWFE, staggered adoption, dynamic effects, treatment switching, continuous treatments, and designs with no untreated units.">
+<link rel="canonical" href="https://credible-answers.github.io/which-difference-in-differences-estimator/">
+<meta property="og:title" content="Which Difference-in-Differences Estimator Should I Use?">
+<meta property="og:description" content="A practical guide to choosing among modern Difference-in-Differences estimators for TWFE, staggered adoption, dynamic effects, treatment switching, continuous treatments, and designs with no untreated units.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://credible-answers.github.io/which-difference-in-differences-estimator/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F5F3EA; --paper-raised:#FFFFFF; --ink:#1B2028; --ink-soft:#4A5160;
+    --rule:#DDD8C8; --rule-strong:#B9B097;
+    --navy:#233A5E; --navy-deep:#182740;
+    --teal:#3F6E5E; --teal-soft:#E7EFEA;
+    --ochre:#9C6420;
+    --no-red:#7C3B34; --no-red-soft:#F3E3E0;
+    --code-bg:#EFEADA;
+    --forest:#173B2C; --forest-deep:#0F2A1F;
+    --mint:#DCEEE3; --mint-ink:#1F5B3F;
+    --navw:64px;
+  }
+  :root[data-theme="dark"] {
+    --paper:#171A20; --paper-raised:#1E222B; --ink:#E8E6DE; --ink-soft:#B1AFA6;
+    --rule:#333844; --rule-strong:#454B59;
+    --navy:#7C9BD1; --navy-deep:#AFC4E8;
+    --teal:#7FBBA2; --teal-soft:#1F2C27;
+    --ochre:#D9A459; --no-red:#D98C82; --no-red-soft:#2E1E1C; --code-bg:#23262F;
+    --forest:#3F7A5C; --forest-deep:#2C5C43; --mint:#1F2C27; --mint-ink:#8FCBAA;
+  }
+  *{box-sizing:border-box;}
+  html{background:var(--paper);}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:"Source Serif 4",Georgia,serif; font-size:17px; line-height:1.55; -webkit-font-smoothing:antialiased;}
+  a{color:var(--navy);}
+  a:hover{color:var(--navy-deep);}
+  code,.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;}
+  h1,h2,h3{line-height:1.2;}
+  button{font:inherit;}
+
+  /* ---- fixed top navbar (matches credible-answers.github.io) ---- */
+  .topnav{
+    position:fixed; top:0; left:0; right:0; height:var(--navw);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:0 28px; background:var(--paper); border-bottom:1px solid var(--rule);
+    z-index:30; gap:18px;
+  }
+  .topnav .brand{font-family:"Source Serif 4",Georgia,serif; font-weight:700; font-size:19px; color:var(--ink); text-decoration:none; flex-shrink:0;}
+  .topnav .navlinks{display:flex; align-items:center; gap:22px; flex-wrap:wrap; overflow-x:auto;}
+  .topnav .navlinks a{font-family:"IBM Plex Mono"; font-size:12.5px; color:var(--ink-soft); text-decoration:none; white-space:nowrap; padding:4px 0; border-bottom:2px solid transparent;}
+  .topnav .navlinks a:hover, .topnav .navlinks a.active{color:var(--ink); border-bottom-color:var(--forest);}
+  .topnav .navbtns{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+  .btn-pill{font-family:"IBM Plex Mono"; font-size:12px; text-decoration:none; padding:8px 14px; border-radius:999px; white-space:nowrap;}
+  .btn-pill.mint{background:var(--mint); color:var(--mint-ink); font-weight:600;}
+  .btn-pill.mint:hover{background:var(--forest); color:#fff;}
+  .btn-pill.forest{background:var(--forest); color:#F2EFE4; font-weight:600;}
+  .btn-pill.forest:hover{background:var(--forest-deep);}
+  .navlinks-mobile{display:none;}
+  @media (max-width:960px){
+    .topnav .navlinks{display:none;}
+  }
+
+  .content{margin-left:0; padding-top:var(--navw);}
+  .wrap{max-width:700px; margin:0 auto; padding:0 32px;}
+  .wrap-wide{max-width:960px; margin:0 auto; padding:0 32px;}
+
+  .hero{padding:48px 0 32px; border-bottom:1px solid var(--rule);}
+  h1.title{font-family:"Source Serif 4",Georgia,serif; font-size:clamp(28px,3.8vw,40px); font-weight:700; letter-spacing:-.01em; margin:0 0 14px; max-width:18ch; color:var(--ink);}
+  .lede{font-size:16.5px; color:var(--ink-soft); max-width:64ch; margin:0 0 10px;}
+  .kbd{font-family:"IBM Plex Mono"; font-size:14px; background:var(--code-bg); padding:1px 5px; border-radius:3px;}
+
+  section{padding:40px 0;}
+  section.alt{background:var(--paper-raised); border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);}
+  h2{font-family:"Source Serif 4",Georgia,serif; font-size:24px; font-weight:700; letter-spacing:-.01em; margin:0 0 6px; max-width:32ch; color:var(--ink);}
+  .kicker{display:block; font-family:"IBM Plex Mono"; font-size:12px; color:var(--forest); margin-bottom:8px;}
+  .intro{color:var(--ink-soft); max-width:64ch; margin:0 0 22px; font-size:15px;}
+
+  /* ---- interactive stair diagnostic ---- */
+  .stair{max-width:640px;}
+  .result-panel{
+    background:var(--forest); color:#F2EFE4; border-radius:2px;
+    padding:16px 20px; margin-bottom:26px; position:sticky; top:14px; z-index:5;
+  }
+  .result-panel .r-label{font-family:"IBM Plex Mono"; font-size:11px; opacity:.8; display:block; margin-bottom:3px;}
+  .result-panel .r-name{font-weight:600; font-size:17px; display:block; margin-bottom:4px;}
+  .result-panel .r-note{font-size:13px; opacity:.92; margin:0 0 8px;}
+  .result-panel .r-links a{color:#C9EEDA; font-size:12.5px; font-family:"IBM Plex Mono"; margin-right:14px;}
+  .result-panel .r-reset{background:none; border:1px solid rgba(255,255,255,.35); color:#F2EFE4; font-family:"IBM Plex Mono"; font-size:11.5px; padding:4px 9px; border-radius:2px; cursor:pointer; float:right;}
+  .result-panel .r-reset:hover{background:rgba(255,255,255,.1);}
+  .r-chips{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px; padding-top:10px; border-top:1px solid rgba(255,255,255,.18);}
+  .r-chips .chip{font-family:"IBM Plex Mono"; font-size:11px; background:rgba(255,255,255,.1); padding:3px 8px; border-radius:2px;}
+  .r-chips .chip.unused{opacity:.55;}
+
+  /* ---- tree layout: trunk runs down the far left, each step branches off it ---- */
+  .tree{position:relative; padding-left:22px;}
+  .tree::before{
+    content:''; position:absolute; left:13px; top:10px; bottom:26px; width:2px;
+    background:linear-gradient(var(--rule-strong), var(--rule));
+  }
+  .step{
+    position:relative;
+    background:var(--paper-raised);
+    border:1px solid var(--rule-strong);
+    border-radius:3px;
+    padding:16px 18px 16px 22px;
+    margin-bottom:22px;
+    transition:margin-left .2s ease, border-color .15s ease;
+  }
+  .step[data-idx="0"]{margin-left:0;}
+  .step[data-idx="1"]{margin-left:22px;}
+  .step[data-idx="2"]{margin-left:44px;}
+  .step[data-idx="3"]{margin-left:66px;}
+  .step[data-idx="4"]{margin-left:66px;}
+  .step[data-idx="5"]{margin-left:88px;}
+  /* branch connector: elbow from the trunk into this node */
+  .step::before{
+    content:''; position:absolute; top:24px; height:2px; right:100%;
+    background:var(--rule-strong);
+  }
+  .step[data-idx="0"]::before{display:none;}
+  .step[data-idx="1"]::before{width:22px;}
+  .step[data-idx="2"]::before{width:44px;}
+  .step[data-idx="3"]::before, .step[data-idx="4"]::before{width:66px;}
+  .step[data-idx="5"]::before{width:88px;}
+  /* node dot marking this question on the tree */
+  .step::after{
+    content:''; position:absolute; left:-6px; top:18px; width:12px; height:12px;
+    border-radius:50%; background:var(--paper-raised); border:2.5px solid var(--rule-strong); z-index:2;
+  }
+  .step[data-idx="0"]::after{left:-13px;}
+  .step.answered{border-color:var(--teal);}
+  .step.answered::before{background:var(--teal);}
+  .step.answered::after{border-color:var(--teal); background:var(--teal);}
+  .step.used{border-color:var(--navy);}
+  .step.used::before{background:var(--navy);}
+  .step.used::after{border-color:var(--navy); background:var(--navy);}
+  .step-head{display:flex; align-items:baseline; gap:10px; margin-bottom:10px;}
+  .step-num{font-family:"IBM Plex Mono"; font-size:11px; color:var(--ink-soft); flex-shrink:0;}
+  .step.answered .step-num{color:var(--teal);}
+  .step.used .step-num{color:var(--navy);}
+  .tree-root-label{font-family:"IBM Plex Mono"; font-size:11px; color:var(--ink-soft); margin:0 0 10px 1px;}
+  .tree-root-label b{color:var(--forest);}
+  .step-q{margin:0; font-size:15.5px;}
+  .opts{display:flex; flex-wrap:wrap; gap:8px;}
+  .opt{
+    font-family:"IBM Plex Mono"; font-size:13px; color:var(--ink);
+    background:var(--paper); border:1px solid var(--rule-strong);
+    padding:7px 12px; border-radius:3px; cursor:pointer; text-align:left;
+  }
+  .opt:hover{border-color:var(--navy); color:var(--navy);}
+  .opt.selected{background:var(--navy); border-color:var(--navy); color:#fff;}
+  .step-note{font-size:12.5px; color:var(--ink-soft); margin:8px 0 0;}
+  .step-flag{font-family:"IBM Plex Mono"; font-size:10.5px; color:var(--ink-soft); margin-left:auto;}
+
+  /* table */
+  .table-scroll{overflow-x:auto; border:1px solid var(--rule-strong);}
+  table.compare{border-collapse:collapse; width:100%; min-width:860px; font-size:13.5px;}
+  table.compare th,table.compare td{text-align:left; padding:11px 14px; border-bottom:1px solid var(--rule); vertical-align:top;}
+  table.compare th{font-family:"IBM Plex Mono"; font-size:11px; font-weight:600; color:var(--ink-soft); background:var(--paper); border-bottom:1px solid var(--rule-strong);}
+  table.compare tr:last-child td{border-bottom:none;}
+  table.compare td.design{font-weight:600; max-width:190px;}
+  table.compare td.methods{font-family:"IBM Plex Mono"; font-size:12px; max-width:180px;}
+  table.compare td.methods span{display:block; margin-bottom:2px;}
+  table.compare td.says{color:var(--ink-soft); max-width:280px;}
+  table.compare tr.hl td{background:var(--teal-soft);}
+
+  /* stata box */
+  .stata-box{background:var(--forest); color:#F2EFE4; padding:26px 28px; border-radius:2px;}
+  .stata-box h2{color:#fff;}
+  .stata-box .intro{color:#CFE6D9;}
+  .stata-box pre{background:rgba(0,0,0,.28); padding:12px 14px; overflow-x:auto; font-size:13.5px; border-radius:2px; margin:12px 0; color:#F2EFE4;}
+  .stata-box .foot{font-size:12.5px; color:#B7D6C4; margin:0;}
+  .stata-box a{color:#C9EEDA;}
+
+  /* satellites */
+  .satellites{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--rule); border:1px solid var(--rule);}
+  @media (max-width:640px){.satellites{grid-template-columns:1fr;}}
+  .sat-card{background:var(--paper-raised); padding:16px 18px;}
+  .sat-card .sat-num{font-family:"IBM Plex Mono"; font-size:11px; color:var(--teal); margin-bottom:4px;}
+  .sat-card h3{font-size:15px; margin:0 0 3px; font-weight:600;}
+  .sat-card h3 a{color:var(--ink); text-decoration:none;}
+  .sat-card h3 a:hover{color:var(--navy); text-decoration:underline;}
+  .sat-card p{font-size:12.5px; color:var(--ink-soft); margin:0;}
+
+  /* other estimators */
+  .other-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media (max-width:640px){.other-grid{grid-template-columns:1fr;}}
+  .other-item{border-top:2px solid var(--rule-strong); padding-top:10px;}
+  .other-item h3{font-size:14.5px; margin:0 0 4px;}
+  .other-item p{font-size:13px; color:var(--ink-soft); margin:0 0 6px;}
+  .other-item .links a{font-size:12px; margin-right:10px; font-family:"IBM Plex Mono";}
+
+  /* references */
+  .refs{font-size:13.5px;}
+  .refs h3{font-family:"IBM Plex Mono"; font-size:12px; color:var(--ink-soft); margin:22px 0 8px;}
+  .refs h3:first-child{margin-top:0;}
+  .refs ol{padding-left:18px; margin:0;}
+  .refs li{margin-bottom:9px; color:var(--ink-soft);}
+  .refs li strong{color:var(--ink); font-weight:600;}
+  .refs a{font-size:12.5px;}
+
+  footer{border-top:1px solid var(--rule); padding:24px 0 50px; font-size:12.5px; color:var(--ink-soft);}
+  footer a{color:var(--ink-soft);}
+
+  @media (max-width:860px){
+    .step[data-idx]{margin-left:0 !important;}
+    .tree::before, .step::before, .step::after{display:none;}
+    .tree{padding-left:0;}
+    .step{padding-left:18px !important;}
+  }
+  .skip{position:absolute; left:-9999px;}
+  .skip:focus{left:10px; top:10px; background:var(--navy); color:#fff; padding:8px 14px; z-index:100;}
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip">Skip to content</a>
+
+<header class="topnav">
+  <a class="brand" href="https://credible-answers.github.io/">Credible Answers</a>
+  <nav class="navlinks">
+    <a href="#diagnose">Diagnose</a>
+    <a href="#compare">Comparison table</a>
+    <a href="#stata">Stata</a>
+    <a href="#satellites">Explainers</a>
+    <a href="#other">Other estimators</a>
+    <a href="#references">References</a>
+  </nav>
+  <div class="navbtns">
+    <a class="btn-pill mint" href="https://credible-answers.github.io/" target="_blank" rel="noopener">Credible Answers &#8599;</a>
+    <a class="btn-pill forest" href="https://github.com/chaisemartinPackages" target="_blank" rel="noopener">GitHub &#8599;</a>
+  </div>
+</header>
+
+<div class="content">
+<main id="main">
+
+  <div class="hero wrap">
+    <h1 class="title">Which Difference-in-Differences Estimator Should I Use?</h1>
+    <p class="lede">No single DiD estimator is always right. The right one depends on the treatment path and the estimand you target. This guide diagnoses the design first, then names compatible estimators and their assumptions.</p>
+    <p class="lede">dCDH methods (<code>did_multiplegt_dyn</code>, <code>_stat</code>, <code>_had</code>) cover standard staggered adoption and more general nonbinary/nonabsorbing designs. Stata users can run <span class="kbd">whichDIDshouldIuse</span> to diagnose their design automatically &mdash; see <a href="#stata">below</a>.</p>
+  </div>
+
+  <section id="diagnose">
+    <div class="wrap">
+      <span class="kicker">Start here</span>
+      <h2>Diagnose your design</h2>
+      <p class="intro">Five criteria, answerable in any order. Several combine to determine the diagnosis; none is a prerequisite for the others. The panel below updates as you answer and shows which combination is still needed.</p>
+    </div>
+    <div class="wrap stair tree">
+
+      <div class="result-panel" id="resultPanel">
+        <button class="r-reset" id="resetBtn">Reset</button>
+        <span class="r-label">Current diagnosis</span>
+        <span class="r-name" id="rName">Answer any question to begin</span>
+        <p class="r-note" id="rNote">Comparison group, treatment type, and timing together place you in a design; dynamics and stayers refine it further.</p>
+        <div class="r-links" id="rLinks"></div>
+        <div class="r-chips" id="rChips"></div>
+      </div>
+
+      <p class="tree-root-label"><b>Criteria</b> &mdash; 01 is a prerequisite; 02&ndash;05 combine to place the design.</p>
+
+      <div class="step" data-step="A" data-idx="0">
+        <div class="step-head"><span class="step-num">01 · Controls / stayers</span><span class="step-flag" data-flag="A"></span></div>
+        <p class="step-q">Do you have never-treated units, not-yet-treated units, or stayers to compare against?</p>
+        <div class="opts">
+          <button class="opt" data-step="A" data-choice="yes">Yes, available</button>
+          <button class="opt" data-step="A" data-choice="no">No usable comparison</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="C" data-idx="1">
+        <div class="step-head"><span class="step-num">02 · Treatment type</span><span class="step-flag" data-flag="C"></span></div>
+        <p class="step-q">Is treatment binary, and does it stay on once switched (absorbing) &mdash; or is it nonbinary (discrete/continuous), or can it switch off?</p>
+        <div class="opts">
+          <button class="opt" data-step="C" data-choice="abs">Binary, absorbing</button>
+          <button class="opt" data-step="C" data-choice="non">Binary, can switch off</button>
+          <button class="opt" data-step="C" data-choice="non2">Nonbinary (discrete/continuous)</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="D" data-idx="2">
+        <div class="step-head"><span class="step-num">03 · Timing</span><span class="step-flag" data-flag="D"></span></div>
+        <p class="step-q">Do all treated units start on the same calendar date? For a nonbinary treatment, "common date" means everyone starts untreated and is dosed together &mdash; heterogeneous adoption (HAD).</p>
+        <div class="opts">
+          <button class="opt" data-step="D" data-choice="common">Common date</button>
+          <button class="opt" data-step="D" data-choice="staggered">Staggered dates</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="E" data-idx="3">
+        <div class="step-head"><span class="step-num">04 · Repeated switches / lagged effects</span><span class="step-flag" data-flag="E"></span></div>
+        <p class="step-q">Can a unit's treatment change more than once, or should past treatment still affect the outcome?</p>
+        <div class="opts">
+          <button class="opt" data-step="E" data-choice="yes">Yes, repeats or lags matter</button>
+          <button class="opt" data-step="E" data-choice="no">No, single switch, effects settle fast</button>
+        </div>
+      </div>
+
+      <div class="step" data-step="F" data-idx="4">
+        <div class="step-head"><span class="step-num">05 · Switchers &amp; stayers / target estimand</span><span class="step-flag" data-flag="F"></span></div>
+        <p class="step-q">Comparable switchers and stayers, and a static (not dynamic) target?</p>
+        <div class="opts">
+          <button class="opt" data-step="F" data-choice="yes">Yes</button>
+          <button class="opt" data-step="F" data-choice="no">No</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="alt" id="compare">
+    <div class="wrap">
+      <span class="kicker">Comparison table</span>
+      <h2>Design &rarr; candidates &rarr; comparison group &rarr; estimand &rarr; assumptions you need</h2>
+    </div>
+    <div class="wrap-wide">
+      <div class="table-scroll">
+        <table class="compare" id="compareTable">
+          <thead><tr><th>Design</th><th>Candidate method(s)</th><th>Comparison group</th><th>Estimand</th><th>Assumptions you need</th></tr></thead>
+          <tbody>
+            <tr id="compare-classical" data-row="twfe">
+              <td class="design">Classical binary absorbing, common date</td>
+              <td class="methods"><span>Static / event-study TWFE</span></td>
+              <td>Never- or not-yet-treated</td>
+              <td>ATT; event-study path</td>
+              <td>Parallel trends in levels between treated and comparison units, and no anticipation of treatment.</td>
+            </tr>
+            <tr id="compare-staggered" data-row="staggered">
+              <td class="design">Binary absorbing, staggered adoption</td>
+              <td class="methods"><span>Callaway&ndash;Sant'Anna</span><span>Sun&ndash;Abraham</span><span>Borusyak&ndash;Jaravel&ndash;Spiess</span><span>did_multiplegt_dyn</span></td>
+              <td>Varies: never-, not-yet-, or last-treated</td>
+              <td>Group-time ATTs / aggregated event study</td>
+              <td>Parallel trends conditional on the comparison group and aggregation scheme you pick &mdash; fix both explicitly, don't default to one package.</td>
+            </tr>
+            <tr id="compare-dyn" data-row="dyn">
+              <td class="design">Staggered first switch; nonbinary/nonabsorbing or repeated changes</td>
+              <td class="methods"><span>did_multiplegt_dyn</span><span>(sometimes _stat)</span></td>
+              <td>Units unchanged since own first switch</td>
+              <td>Event-study path, robust to heterogeneity and lags</td>
+              <td>Parallel trends among not-yet-switchers; <code>dyn</code> needs no restriction on lag length, <code>stat</code> needs an explicit finite-lag assumption instead.</td>
+            </tr>
+            <tr id="compare-stat" data-row="stat">
+              <td class="design">Switcher/stayer, static target</td>
+              <td class="methods"><span>did_multiplegt_stat</span></td>
+              <td>Stayers over the relevant window</td>
+              <td>Static effect; dose-response slope</td>
+              <td>Suitable stayers over the relevant window, plus an explicit finite-lag condition on past treatment.</td>
+            </tr>
+            <tr id="compare-had" data-row="had">
+              <td class="design">HAD: all untreated, then common-date heterogeneous doses</td>
+              <td class="methods"><span>did_had</span></td>
+              <td>Quasi-untreated, where available</td>
+              <td>Dose effect; dose-response</td>
+              <td>The full HAD definition: every unit starts untreated and is dosed on the same date &mdash; a shared start date alone isn't enough.</td>
+            </tr>
+            <tr id="compare-none" data-row="none">
+              <td class="design">No identifying comparison</td>
+              <td class="methods"><span>&mdash;</span></td>
+              <td>&mdash;</td>
+              <td>&mdash;</td>
+              <td>No assumption currently available to lean on &mdash; state what comparison group would need to exist.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="stata">
+    <div class="wrap">
+      <div class="stata-box">
+        <h2>Diagnose my data in Stata</h2>
+        <p class="intro">Run <code>whichDIDshouldIuse</code> on your panel for an automatic description of the design before choosing an estimator.</p>
+<pre><code>ssc install whichDIDshouldIuse
+
+whichDIDshouldIuse Y G T D</code></pre>
+        <p class="foot">Not yet on SSC for your version? Check the <a href="https://github.com/chaisemartinPackages" target="_blank" rel="noopener">Credible Answers GitHub</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="satellites">
+    <div class="wrap">
+      <span class="kicker">Read further</span>
+      <h2>Seven explainers</h2>
+      <p class="intro">One per branch. This hub summarizes; it doesn't duplicate.</p>
+    </div>
+    <div class="wrap-wide">
+      <div class="satellites">
+        <div class="sat-card" id="satellite-1"><span class="sat-num">01</span><h3><a href="../classical-binary-absorbing-did/">Classical binary DiD &amp; TWFE</a></h3><p>Common-date case, and where it breaks.</p></div>
+        <div class="sat-card" id="satellite-2"><span class="sat-num">02</span><h3><a href="../staggered-adoption-estimators/">Staggered adoption estimators</a></h3><p>CS, SA, BJS, dyn compared.</p></div>
+        <div class="sat-card" id="satellite-3"><span class="sat-num">03</span><h3><a href="../did-multiplegt-dyn/">did_multiplegt_dyn</a></h3><p>Nonbinary, nonabsorbing, repeated switches.</p></div>
+        <div class="sat-card" id="satellite-4"><span class="sat-num">04</span><h3><a href="../did-multiplegt-stat/">did_multiplegt_stat</a></h3><p>Switcher/stayer, static target.</p></div>
+        <div class="sat-card" id="satellite-5"><span class="sat-num">05</span><h3><a href="../continuous-treatments-instruments-stayers/">Continuous treatments &amp; instruments</a></h3><p>Dose-response DiD with stayers.</p></div>
+        <div class="sat-card" id="satellite-6"><span class="sat-num">06</span><h3><a href="../heterogeneous-adoption-designs/">did_had</a></h3><p>HAD, quasi- vs. no-quasi-untreated.</p></div>
+        <div class="sat-card" id="satellite-7"><span class="sat-num">07</span><h3><a href="../no-valid-comparison-group/">No valid comparison group</a></h3><p>What's missing, what would fix it.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="other">
+    <div class="wrap">
+      <span class="kicker">Neutral overview</span>
+      <h2>Other modern DiD estimators</h2>
+      <p class="intro">Candidates for the staggered-adoption row. None dominates uniformly.</p>
+    </div>
+    <div class="wrap-wide">
+      <div class="other-grid">
+        <div class="other-item"><h3>Callaway&ndash;Sant'Anna</h3><p>Group-time ATTs; never- or not-yet-treated comparison, user's choice; doubly robust with covariates.</p>
+          <div class="links"><a href="https://doi.org/10.1016/j.jeconom.2020.12.001" target="_blank" rel="noopener">Paper</a><a href="https://bcallaway11.github.io/did/" target="_blank" rel="noopener">R: did</a><a href="https://friosavila.github.io/playingwithstata/main_csdid.html" target="_blank" rel="noopener">Stata: csdid</a></div></div>
+        <div class="other-item"><h3>Sun&ndash;Abraham</h3><p>Interaction-weighted event study; never- or last-treated comparison.</p>
+          <div class="links"><a href="https://doi.org/10.1016/j.jeconom.2020.09.006" target="_blank" rel="noopener">Paper</a><a href="https://github.com/lsun20/EventStudyInteract" target="_blank" rel="noopener">Stata: eventstudyinteract</a></div></div>
+        <div class="other-item"><h3>Borusyak&ndash;Jaravel&ndash;Spiess</h3><p>Imputation estimator; fits FE on untreated cells only, then imputes.</p>
+          <div class="links"><a href="https://doi.org/10.1093/restud/rdae007" target="_blank" rel="noopener">Paper</a></div></div>
+        <div class="other-item"><h3>did2s &amp; related</h3><p>Two-stage imputation in the spirit of Gardner (2021).</p>
+          <div class="links"><a href="https://arxiv.org/pdf/2109.05913v1" target="_blank" rel="noopener">Article</a><a href="https://github.com/kylebutts/did2s_stata" target="_blank" rel="noopener">Stata: did2s</a></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt" id="references">
+    <div class="wrap">
+      <span class="kicker">Bibliography</span>
+      <h2>References</h2>
+    </div>
+    <div class="wrap refs">
+      <h3>de Chaisemartin &amp; D'Haultfœuille estimators</h3>
+      <ol>
+        <li><strong>de Chaisemartin, C. &amp; D'Haultfœuille, X. (2020).</strong> "Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects." <em>AER</em>, 110(9).<br><a href="https://sites.google.com/site/clementdechaisemartin/" target="_blank" rel="noopener">Author page, slides, Web Appendix</a></li>
+        <li><strong>de Chaisemartin &amp; D'Haultfœuille.</strong> Event-study estimator behind <code>did_multiplegt_dyn</code> &mdash; binary or nonbinary, absorbing or not, with lagged effects.<br><a href="https://cran.r-project.org/web/packages/DIDmultiplegtDYN/DIDmultiplegtDYN.pdf" target="_blank" rel="noopener">R: DIDmultiplegtDYN</a> &middot; <a href="https://arxiv.org/pdf/2510.19426" target="_blank" rel="noopener">Companion note</a> &middot; <a href="https://github.com/chaisemartinPackages/did_multiplegt" target="_blank" rel="noopener">Repo</a></li>
+        <li><strong>de Chaisemartin, D'Haultfœuille, Pasquier &amp; Vazquez-Bare (2022).</strong> "DiD for Continuous Treatments and Instruments with Stayers." Basis for <code>did_multiplegt_stat</code>.<br><a href="https://github.com/chaisemartinPackages/did_multiplegt" target="_blank" rel="noopener">Repo &amp; docs</a></li>
+        <li><strong>de Chaisemartin &amp; D'Haultfœuille.</strong> HAD estimator behind <code>did_had</code>, quasi- and no-quasi-untreated cases.<br><a href="https://github.com/chaisemartinPackages/did_multiplegt" target="_blank" rel="noopener">Repo &amp; docs</a></li>
+        <li><strong>de Chaisemartin &amp; D'Haultfœuille (2020).</strong> Original <code>did_multiplegt</code> (now <code>old</code> mode), superseded by <code>dyn</code>.<br><a href="https://cran.rstudio.com/web/packages/DIDmultiplegt/DIDmultiplegt.pdf" target="_blank" rel="noopener">Docs</a></li>
+      </ol>
+      <h3>Other modern DiD estimators</h3>
+      <ol>
+        <li><strong>Callaway &amp; Sant'Anna (2021).</strong> "DiD with Multiple Time Periods." <em>JoE</em>, 225(2), 200&ndash;230.<br><a href="https://doi.org/10.1016/j.jeconom.2020.12.001" target="_blank" rel="noopener">DOI</a> &middot; <a href="https://arxiv.org/abs/1803.09015" target="_blank" rel="noopener">arXiv</a> &middot; <a href="https://bcallaway11.github.io/did/" target="_blank" rel="noopener">R: did</a> &middot; <a href="https://friosavila.github.io/playingwithstata/main_csdid.html" target="_blank" rel="noopener">Stata: csdid</a></li>
+        <li><strong>Sun &amp; Abraham (2021).</strong> "Estimating Dynamic Treatment Effects in Event Studies." <em>JoE</em>, 225(2), 175&ndash;199.<br><a href="https://github.com/lsun20/EventStudyInteract" target="_blank" rel="noopener">Stata: eventstudyinteract</a></li>
+        <li><strong>Borusyak, Jaravel &amp; Spiess (2024).</strong> "Revisiting Event Study Designs." <em>ReStud</em>, 91(6), 3253&ndash;3285.</li>
+        <li><strong>Gardner (2021).</strong> "Two-Stage Differences in Differences."<br><a href="https://arxiv.org/pdf/2109.05913v1" target="_blank" rel="noopener">did2s article</a> &middot; <a href="https://github.com/kylebutts/did2s_stata" target="_blank" rel="noopener">Stata: did2s</a></li>
+      </ol>
+      <h3>Background &amp; tutorials</h3>
+      <ol>
+        <li><strong>Goodman-Bacon (2021).</strong> "DiD with Variation in Treatment Timing." <em>JoE</em>, 225(2), 254&ndash;277.</li>
+        <li><a href="https://asjadnaqvi.github.io/DiD/" target="_blank" rel="noopener">Asjad Naqvi, "The Econometrics of DiD"</a> &mdash; cross-package tutorial.</li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+</div>
+
+<footer>
+  <div class="wrap" style="max-width:960px;">
+    Maintained by <a href="https://credible-answers.github.io/" target="_blank" rel="noopener">Credible Answers</a>. &middot; <a href="https://github.com/chaisemartinPackages" target="_blank" rel="noopener">Package source</a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // topnav active-link tracking
+  const navLinks = document.querySelectorAll('.topnav .navlinks a[href^="#"]');
+  const navSections = Array.from(navLinks).map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  function setActiveNav(){
+    let current = navSections[0];
+    for (const s of navSections){ if (s.getBoundingClientRect().top - 80 <= 0) current = s; }
+    navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current.id));
+  }
+  document.addEventListener('scroll', setActiveNav, {passive:true});
+  setActiveNav();
+
+  // --- interactive diagnostic: facts combine, none blocks another; A is the only hard gate ---
+  const ALL_STEPS = ['A','C','D','E','F'];
+  const LABELS = {
+    A: {name:'Controls', yes:'Comparison available', no:'No comparison'},
+    C: {name:'Treatment', abs:'Binary, absorbing', non:'Binary, can switch off', non2:'Nonbinary'},
+    D: {name:'Timing', common:'Common date', staggered:'Staggered dates'},
+    E: {name:'Dynamics', yes:'Repeats / lags matter', no:'Single switch, settles fast'},
+    F: {name:'Switchers/stayers', yes:'Static, comparable stayers', no:'No fit'}
+  };
+  const STEP_TITLE = { A:'01 Controls', C:'02 Treatment type', D:'03 Timing', E:'04 Dynamics', F:'05 Switchers/stayers' };
+
+  const RESULTS = {
+    none: { name:'No automatic recommendation', note:'State what comparison is missing and what would be needed to identify an effect.', row:'compare-none', sat:'#satellite-7' },
+    had: { name:'did_had', note:'Nonbinary treatment, common dosing date: everyone starts untreated, then all dosed together at heterogeneous doses. Confirm no unit was already treated before that date.', row:'compare-had', sat:'#satellite-6' },
+    twfe: { name:'Static / event-study TWFE', note:'Classical binary absorbing DiD, common adoption date.', row:'compare-classical', sat:'#satellite-1' },
+    staggered: { name:'Binary staggered adoption', note:'Candidates: Callaway\u2013Sant\u2019Anna, Sun\u2013Abraham, Borusyak\u2013Jaravel\u2013Spiess, did_multiplegt_dyn. Compare, don\u2019t default.', row:'compare-staggered', sat:'#satellite-2' },
+    dyn: { name:'did_multiplegt_dyn', note:'Nonbinary/nonabsorbing or repeated switches, with lagged effects.', row:'compare-dyn', sat:'#satellite-3' },
+    stat: { name:'did_multiplegt_stat', note:'Switcher/stayer design, static target, finite-lag condition.', row:'compare-stat', sat:'#satellite-4' },
+    fallback: { name:'Reconsider did_multiplegt_dyn', note:'No fitting switcher/stayer static design \u2014 dyn nests the static case, or see the continuous-treatment explainer.', row:'compare-dyn', sat:'#satellite-5' }
+  };
+
+  const state = {};
+  const stepEls = {};
+  ALL_STEPS.forEach(id => stepEls[id] = document.querySelector('.step[data-step="'+id+'"]'));
+  const rName = document.getElementById('rName');
+  const rNote = document.getElementById('rNote');
+  const rLinks = document.getElementById('rLinks');
+  const rChips = document.getElementById('rChips');
+  const compareTable = document.getElementById('compareTable');
+
+  // C and D jointly place you in a branch; A is a hard prerequisite; E/F only apply
+  // once C+D land you in the "nonabsorbing / nonbinary, not HAD" zone.
+  function diagnose(s){
+    if (s.A === 'no') return { key:'none', used:['A'], missing:[] };
+
+    const nonabs = (s.C === 'non' || s.C === 'non2');
+
+    if (s.C === 'abs' && s.D === 'common') return { key:'twfe', used:['A','C','D'], missing:[] };
+    if (s.C === 'abs' && s.D === 'staggered') return { key:'staggered', used:['A','C','D'], missing:[] };
+    if (s.C === 'non2' && s.D === 'common') return { key:'had', used:['A','C','D'], missing:[] };
+
+    if (nonabs && (s.D === 'staggered' || (s.C === 'non' && s.D === 'common'))){
+      if (s.E === 'yes') return { key:'dyn', used:['A','C','D','E'], missing:[] };
+      if (s.E === 'no'){
+        if (s.F === 'yes') return { key:'stat', used:['A','C','D','E','F'], missing:[] };
+        if (s.F === 'no') return { key:'fallback', used:['A','C','D','E','F'], missing:[] };
+        return { key:null, used:['A','C','D','E'], missing:['F'] };
+      }
+      return { key:null, used:['A','C','D'], missing:['E'] };
+    }
+
+    // C and/or D not yet answered (or not yet enough to place a branch)
+    const missing = [];
+    if (!s.C) missing.push('C');
+    if (!s.D) missing.push('D');
+    return { key:null, used: s.A ? ['A'] : [], missing };
+  }
+
+  function render(){
+    const result = diagnose(state);
+    const usedSet = new Set(result.used || []);
+
+    ALL_STEPS.forEach(id => {
+      const el = stepEls[id];
+      el.classList.remove('answered','used');
+      if (state[id]) el.classList.add(usedSet.has(id) ? 'used' : 'answered');
+      el.querySelectorAll('.opt').forEach(btn => {
+        btn.classList.toggle('selected', state[id] === btn.dataset.choice);
+      });
+      const flag = el.querySelector('.step-flag');
+      if (flag){
+        if (state[id] && !usedSet.has(id) && result.key){
+          flag.textContent = 'saved \u2014 not needed for this branch';
+        } else {
+          flag.textContent = '';
+        }
+      }
+    });
+
+    compareTable.querySelectorAll('tbody tr').forEach(tr => tr.classList.remove('hl'));
+
+    if (result.key){
+      const r = RESULTS[result.key];
+      rName.textContent = r.name;
+      rNote.textContent = r.note;
+      rLinks.innerHTML = '<a href="#'+r.row+'">Comparison table row</a><a href="'+r.sat+'">Explainer</a>';
+      const row = document.getElementById(r.row);
+      if (row) row.classList.add('hl');
+    } else {
+      const anyAnswered = ALL_STEPS.some(id => state[id]);
+      if (!anyAnswered){
+        rName.textContent = 'Answer any question to begin';
+      } else {
+        const missNames = (result.missing || []).map(id => STEP_TITLE[id]).join(' and ');
+        rName.textContent = missNames ? ('Still need: ' + missNames) : 'Diagnosis in progress\u2026';
+      }
+      rNote.textContent = 'Comparison group, treatment type, and timing together place you in a design; dynamics and stayers refine it further.';
+      rLinks.innerHTML = '';
+    }
+
+    const chips = ALL_STEPS.filter(id => state[id]).map(id => {
+      const cls = usedSet.has(id) ? 'chip' : 'chip unused';
+      return '<span class="'+cls+'">'+LABELS[id].name+': '+LABELS[id][state[id]]+'</span>';
+    });
+    rChips.innerHTML = chips.join('');
+  }
+
+  document.querySelectorAll('.opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const step = btn.dataset.step;
+      const choice = btn.dataset.choice;
+      state[step] = (state[step] === choice) ? undefined : choice;
+      if (state[step] === undefined) delete state[step];
+      render();
+    });
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    ALL_STEPS.forEach(id => delete state[id]);
+    render();
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
