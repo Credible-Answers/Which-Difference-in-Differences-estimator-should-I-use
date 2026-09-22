@@ -120,6 +120,16 @@ table.compare td.further a{font-family:var(--mono); font-size:.72rem; color:var(
 table.compare td.further .cite{font-family:var(--mono); font-size:.72rem; color:var(--muted); margin-right:8px; display:inline-block;}
 table.compare tr.hl td{background:var(--accent-light);}
 
+/* Packages column: badge + language toggle buttons + revealed syntax */
+table.compare td.methods .pkg-item{margin-bottom:10px;}
+table.compare td.methods .pkg-item:last-child{margin-bottom:0;}
+table.compare td.methods .pkg-item-head{display:flex; flex-wrap:wrap; align-items:center; gap:5px; margin-bottom:4px;}
+table.compare .lang-toggle{display:inline-flex; gap:3px;}
+table.compare .lang-btn{font-family:var(--mono); font-size:.6rem; font-weight:600; color:var(--muted); background:var(--bg); border:1px solid var(--border); border-radius:4px; padding:.1rem .4rem; cursor:pointer; text-transform:uppercase;}
+table.compare .lang-btn:hover{border-color:var(--accent); color:var(--accent);}
+table.compare .lang-btn.active{background:var(--accent); border-color:var(--accent); color:#fff;}
+table.compare .pkg-code{font-family:var(--mono); font-size:.68rem; color:var(--accent2); background:var(--bg); border-radius:6px; padding:.5rem .6rem; margin:0; white-space:pre-wrap; word-break:break-word; line-height:1.5;}
+
 /* DIAGNOSTIC */
 .stair{max-width:640px;}
 .result-panel{background:var(--accent); color:#fff; border-radius:12px; padding:1.2rem 1.4rem; margin-bottom:1.8rem; position:sticky; top:calc(var(--navw) + 12px); z-index:5;}
@@ -280,7 +290,20 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
                 <line x1="70" y1="0" x2="70" y2="40" stroke="var(--muted)" stroke-dasharray="2,2"/>
               </svg>
             </td>
-            <td class="methods"><span class="pkg-badge">reg / xtreg (TWFE)</span><span class="pkg-badge">did_multiplegt_dyn</span></td>
+            <td class="methods">
+              <div class="pkg-item">
+                <div class="pkg-item-head"><span class="pkg-badge">reg / xtreg (TWFE)</span>
+                  <div class="lang-toggle" data-pkg="twfe"><button class="lang-btn" data-lang="stata">Stata</button></div>
+                </div>
+                <pre class="pkg-code" hidden></pre>
+              </div>
+              <div class="pkg-item">
+                <div class="pkg-item-head"><span class="pkg-badge">did_multiplegt_dyn</span>
+                  <div class="lang-toggle" data-pkg="dyn"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="r">R</button><button class="lang-btn" data-lang="py">Python</button></div>
+                </div>
+                <pre class="pkg-code" hidden></pre>
+              </div>
+            </td>
             <td class="further"><span class="chap">Ch. 3 &mdash; Canonical DID Design</span><a href="https://sites.google.com/site/clementdechaisemartin/" target="_blank" rel="noopener">Book &amp; slides</a><a href="https://doi.org/10.1257/aer.20181169" target="_blank" rel="noopener">AER 2020</a></td>
           </tr>
           <tr id="compare-staggered" data-row="staggered">
@@ -301,7 +324,14 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
                 <rect x="120" y="34" width="40" height="9" fill="var(--accent)"/>
               </svg>
             </td>
-            <td class="methods"><span class="pkg-badge">did_multiplegt_dyn</span></td>
+            <td class="methods">
+              <div class="pkg-item">
+                <div class="pkg-item-head"><span class="pkg-badge">did_multiplegt_dyn</span>
+                  <div class="lang-toggle" data-pkg="dyn"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="r">R</button><button class="lang-btn" data-lang="py">Python</button></div>
+                </div>
+                <pre class="pkg-code" hidden></pre>
+              </div>
+            </td>
             <td class="further"><span class="chap">Ch. 6 &mdash; Staggered Adoption Designs</span><a href="https://doi.org/10.1257/aer.20181169" target="_blank" rel="noopener">de Chaisemartin &amp; D'Haultfœuille (2020)</a><a href="https://direct.mit.edu/rest/article-abstract/doi/10.1162/rest_a_01414/119488/Difference-in-Differences-Estimators-of?redirectedFrom=fulltext" target="_blank" rel="noopener">de Chaisemartin &amp; D'Haultfœuille (2025)</a><a href="https://doi.org/10.1016/j.jeconom.2020.12.001" target="_blank" rel="noopener">Callaway &amp; Sant'Anna (2021)</a><span class="cite">Sun &amp; Abraham (2021)</span><span class="cite">Borusyak, Jaravel &amp; Spiess (2024)</span></td>
           </tr>
           <tr id="compare-had" data-row="had">
@@ -323,7 +353,14 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
                 <line x1="70" y1="0" x2="70" y2="46" stroke="var(--muted)" stroke-dasharray="2,2"/>
               </svg>
             </td>
-            <td class="methods"><span class="pkg-badge">did_had</span></td>
+            <td class="methods">
+              <div class="pkg-item">
+                <div class="pkg-item-head"><span class="pkg-badge">did_had</span>
+                  <div class="lang-toggle" data-pkg="had"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="r">R</button><button class="lang-btn" data-lang="py">Python</button></div>
+                </div>
+                <pre class="pkg-code" hidden></pre>
+              </div>
+            </td>
             <td class="further"><span class="chap">Ch. 7 &mdash; Heterogeneous Adoption Designs</span><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4284811" target="_blank" rel="noopener">de Chaisemartin et al. (2025)</a><a href="https://sites.google.com/site/clementdechaisemartin/" target="_blank" rel="noopener">Book &amp; slides</a></td>
           </tr>
           <tr id="compare-general" data-row="general">
@@ -346,7 +383,20 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
                 <rect x="130" y="26" width="30" height="10" fill="var(--accent)"/>
               </svg>
             </td>
-            <td class="methods"><span class="pkg-badge">did_multiplegt_dyn</span><span class="pkg-badge">did_multiplegt_stat</span></td>
+            <td class="methods">
+              <div class="pkg-item">
+                <div class="pkg-item-head"><span class="pkg-badge">did_multiplegt_dyn</span>
+                  <div class="lang-toggle" data-pkg="dyn"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="r">R</button><button class="lang-btn" data-lang="py">Python</button></div>
+                </div>
+                <pre class="pkg-code" hidden></pre>
+              </div>
+              <div class="pkg-item">
+                <div class="pkg-item-head"><span class="pkg-badge">did_multiplegt_stat</span>
+                  <div class="lang-toggle" data-pkg="stat"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="py">Python</button></div>
+                </div>
+                <pre class="pkg-code" hidden></pre>
+              </div>
+            </td>
             <td class="further"><span class="chap">Ch. 8 &mdash; Staggered First Switch Designs</span><a href="https://doi.org/10.1257/aer.20181169" target="_blank" rel="noopener">de Chaisemartin &amp; D'Haultfœuille (2020)</a><a href="https://direct.mit.edu/rest/article-abstract/doi/10.1162/rest_a_01414/119488/Difference-in-Differences-Estimators-of?redirectedFrom=fulltext" target="_blank" rel="noopener">de Chaisemartin &amp; D'Haultfœuille (2025)</a><a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4011782" target="_blank" rel="noopener">de Chaisemartin et al. (2022)</a></td>
           </tr>
         </tbody>
@@ -473,6 +523,45 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
     btn.textContent = '✓';
     setTimeout(() => { btn.textContent = orig; }, 1200);
   };
+
+  // package syntax by language, shown inline in the comparison table's Packages column
+  const PKG_SYNTAX = {
+    twfe: {
+      stata: 'xtreg Y D i.T, fe cluster(G)'
+    },
+    dyn: {
+      stata: 'did_multiplegt_dyn Y G T D, effects(5) placebo(5)',
+      r: 'library(DIDmultiplegtDYN)\ndid_multiplegt_dyn(df, Y = "Y", G = "G",\n  T = "T", D = "D", effects = 5)',
+      py: 'from did_multiplegt_dyn import did_multiplegt_dyn\ndid_multiplegt_dyn(df=df, Y="Y", G="G",\n  T="T", D="D", effects=5)'
+    },
+    stat: {
+      stata: 'did_multiplegt_stat Y G T D, weight(D)',
+      py: 'from did_multiplegt_stat import did_multiplegt_stat\ndid_multiplegt_stat(df=df, Y="Y", G="G",\n  T="T", D="D")'
+    },
+    had: {
+      stata: 'did_had Y G T D',
+      r: 'library(DIDhad)\ndid_had(df, Y = "Y", G = "G", T = "T", D = "D")',
+      py: 'from did_had import did_had\ndid_had(df=df, Y="Y", G="G", T="T", D="D")'
+    }
+  };
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('.pkg-item');
+      const pkg = btn.closest('.lang-toggle').dataset.pkg;
+      const lang = btn.dataset.lang;
+      const codeEl = item.querySelector('.pkg-code');
+      const wasActive = btn.classList.contains('active');
+      item.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+      if (wasActive){
+        codeEl.hidden = true;
+        codeEl.textContent = '';
+      } else {
+        btn.classList.add('active');
+        codeEl.textContent = (PKG_SYNTAX[pkg] && PKG_SYNTAX[pkg][lang]) || 'Syntax not available.';
+        codeEl.hidden = false;
+      }
+    });
+  });
 
   // topnav active-link tracking
   const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
