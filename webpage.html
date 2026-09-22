@@ -272,7 +272,7 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
     </ul>
     <div class="table-scroll">
       <table class="compare" id="compareTable">
-        <thead><tr><th>Name</th><th>Design</th><th>Treatment pattern</th><th>Packages</th><th>Further reading</th></tr></thead>
+        <thead><tr><th>Name</th><th>Definition</th><th>Treatment pattern</th><th>Packages</th><th>Further reading</th></tr></thead>
         <tbody>
           <tr id="compare-classical" data-row="twfe">
             <td class="design">Canonical DID design</td>
@@ -280,6 +280,7 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
               <li>Binary treatment</li>
               <li>Absorbing</li>
               <li>Common adoption date</li>
+              <li>No variation in time (all treated units switch together)</li>
               <li>Never-/not-yet-treated comparison</li>
             </ul></td>
             <td class="diagram">
@@ -312,6 +313,7 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
               <li>Binary treatment</li>
               <li>Absorbing</li>
               <li>Staggered adoption dates</li>
+              <li>Variation in time (switch dates differ across units)</li>
               <li>Never-/not-yet-treated comparison</li>
             </ul></td>
             <td class="diagram">
@@ -339,6 +341,7 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
             <td class="desc"><ul>
               <li>Nonbinary treatment (discrete/continuous)</li>
               <li>Common dosing date</li>
+              <li>No variation in time (all units dosed together)</li>
               <li>Heterogeneous doses across units</li>
               <li>Quasi-untreated comparison, where available</li>
             </ul></td>
@@ -369,6 +372,7 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
               <li>Binary or nonbinary treatment</li>
               <li>Nonabsorbing (can switch off) or repeated switches</li>
               <li>Staggered first-switch dates</li>
+              <li>Variation in time (first-switch dates differ across units)</li>
               <li>Not-yet-switched comparison; lagged effects allowed</li>
             </ul></td>
             <td class="diagram">
