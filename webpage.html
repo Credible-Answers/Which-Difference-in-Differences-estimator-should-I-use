@@ -114,6 +114,7 @@ table.compare td.diagram{width:170px; min-width:170px;}
 table.compare td.diagram svg{display:block; width:100%; height:auto;}
 table.compare td.methods{max-width:160px;}
 table.compare .pkg-badge{display:inline-block; font-family:var(--mono); font-size:.68rem; font-weight:600; color:var(--accent); background:var(--accent-light); border:1px solid var(--accent-border); border-radius:100px; padding:.15rem .6rem; margin:0 4px 4px 0;}
+table.compare .pkg-badge em{font-style:normal; font-weight:400; opacity:.7;}
 table.compare td.further{color:var(--muted); max-width:260px; font-size:.78rem;}
 table.compare td.further .chap{display:block; color:var(--text); font-weight:600; font-size:.8rem; margin-bottom:4px;}
 table.compare td.further a{font-family:var(--mono); font-size:.72rem; color:var(--accent); text-decoration:underline; text-underline-offset:2px; margin-right:8px; display:inline-block;}
@@ -328,13 +329,19 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
             </td>
             <td class="methods">
               <div class="pkg-item">
-                <div class="pkg-item-head"><span class="pkg-badge">did_multiplegt_dyn</span>
+                <div class="pkg-item-head"><span class="pkg-badge">did_multiplegt_dyn <em>(reweighting)</em></span>
                   <div class="lang-toggle" data-pkg="dyn"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="r">R</button><button class="lang-btn" data-lang="py">Python</button></div>
                 </div>
                 <pre class="pkg-code" hidden></pre>
               </div>
+              <div class="pkg-item">
+                <div class="pkg-item-head"><span class="pkg-badge">fect <em>(imputation)</em></span>
+                  <div class="lang-toggle" data-pkg="fect"><button class="lang-btn" data-lang="r">R</button></div>
+                </div>
+                <pre class="pkg-code" hidden></pre>
+              </div>
             </td>
-            <td class="further"><span class="chap">Ch. 6 &mdash; Staggered Adoption Designs</span><a href="https://doi.org/10.1257/aer.20181169" target="_blank" rel="noopener">de Chaisemartin &amp; D'Haultfœuille (2020)</a><a href="https://direct.mit.edu/rest/article-abstract/doi/10.1162/rest_a_01414/119488/Difference-in-Differences-Estimators-of?redirectedFrom=fulltext" target="_blank" rel="noopener">de Chaisemartin &amp; D'Haultfœuille (2025)</a><a href="https://doi.org/10.1016/j.jeconom.2020.12.001" target="_blank" rel="noopener">Callaway &amp; Sant'Anna (2021)</a><span class="cite">Sun &amp; Abraham (2021)</span><span class="cite">Borusyak, Jaravel &amp; Spiess (2024)</span></td>
+            <td class="further"><span class="chap">Ch. 6 &mdash; Staggered Adoption Designs</span><a href="https://doi.org/10.1257/aer.20181169" target="_blank" rel="noopener">de Chaisemartin &amp; D'Haultfœuille (2020)</a><a href="https://direct.mit.edu/rest/article-abstract/doi/10.1162/rest_a_01414/119488/Difference-in-Differences-Estimators-of?redirectedFrom=fulltext" target="_blank" rel="noopener">de Chaisemartin &amp; D'Haultfœuille (2025)</a><a href="https://doi.org/10.1016/j.jeconom.2020.12.001" target="_blank" rel="noopener">Callaway &amp; Sant'Anna (2021)</a><span class="cite">Sun &amp; Abraham (2021)</span><span class="cite">Borusyak, Jaravel &amp; Spiess (2024)</span><span class="cite">Liu, Wang &amp; Xu (2022) &mdash; fect</span></td>
           </tr>
           <tr id="compare-had" data-row="had">
             <td class="design">Heterogeneous adoption design</td>
@@ -389,13 +396,13 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
             </td>
             <td class="methods">
               <div class="pkg-item">
-                <div class="pkg-item-head"><span class="pkg-badge">did_multiplegt_dyn</span>
+                <div class="pkg-item-head"><span class="pkg-badge">did_multiplegt_dyn <em>(dynamic)</em></span>
                   <div class="lang-toggle" data-pkg="dyn"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="r">R</button><button class="lang-btn" data-lang="py">Python</button></div>
                 </div>
                 <pre class="pkg-code" hidden></pre>
               </div>
               <div class="pkg-item">
-                <div class="pkg-item-head"><span class="pkg-badge">did_multiplegt_stat</span>
+                <div class="pkg-item-head"><span class="pkg-badge">did_multiplegt_stat <em>(static)</em></span>
                   <div class="lang-toggle" data-pkg="stat"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="py">Python</button></div>
                 </div>
                 <pre class="pkg-code" hidden></pre>
@@ -493,6 +500,7 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
         <li><strong>Sun &amp; Abraham (2021).</strong> "Estimating Dynamic Treatment Effects in Event Studies." <em>JoE</em>, 225(2), 175&ndash;199.<br><a href="https://github.com/lsun20/EventStudyInteract" target="_blank" rel="noopener">Stata: eventstudyinteract</a></li>
         <li><strong>Borusyak, Jaravel &amp; Spiess (2024).</strong> "Revisiting Event Study Designs." <em>ReStud</em>, 91(6), 3253&ndash;3285.</li>
         <li><strong>Gardner (2021).</strong> "Two-Stage Differences in Differences."<br><a href="https://arxiv.org/pdf/2109.05913v1" target="_blank" rel="noopener">did2s article</a> &middot; <a href="https://github.com/kylebutts/did2s_stata" target="_blank" rel="noopener">Stata: did2s</a></li>
+        <li><strong>Liu, Wang &amp; Xu (2022).</strong> "A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data." <em>Political Analysis</em>. Imputation estimator for binary absorbing treatment, in the spirit of Borusyak&ndash;Jaravel&ndash;Spiess.<br><a href="https://yiqingxu.org/packages/fect/" target="_blank" rel="noopener">R: fect</a></li>
       </ol>
       <h3>Background &amp; tutorials</h3>
       <ol>
@@ -546,6 +554,9 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
       stata: 'did_had Y G T D',
       r: 'library(DIDhad)\ndid_had(df, Y = "Y", G = "G", T = "T", D = "D")',
       py: 'from did_had import did_had\ndid_had(df=df, Y="Y", G="G", T="T", D="D")'
+    },
+    fect: {
+      r: 'library(fect)\nout <- fect(Y ~ D, data = df,\n  index = c("G", "T"), method = "fe")'
     }
   };
   document.querySelectorAll('.lang-btn').forEach(btn => {
