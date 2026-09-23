@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Which Difference-in-Differences Estimator Should I Use? | Credible Answers</title>
 <meta name="description" content="A practical guide to choosing among modern Difference-in-Differences estimators for TWFE, staggered adoption, dynamic effects, treatment switching, continuous treatments, and designs with no untreated units.">
-<link rel="canonical" href="https://credible-answers.github.io/which-difference-in-differences-estimator/">
+<link rel="canonical" href="https://credible-answers.github.io/Which-Difference-in-Differences-estimator-should-I-use/">
 <meta property="og:title" content="Which Difference-in-Differences Estimator Should I Use?">
 <meta property="og:description" content="A practical guide to choosing among modern Difference-in-Differences estimators for TWFE, staggered adoption, dynamic effects, treatment switching, continuous treatments, and designs with no untreated units.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://credible-answers.github.io/which-difference-in-differences-estimator/">
+<meta property="og:url" content="https://credible-answers.github.io/Which-Difference-in-Differences-estimator-should-I-use/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
@@ -218,7 +218,7 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
     <li><a href="#diagnose">Diagnose</a></li>
     <li><a href="#references">References</a></li>
     <li><a class="btn-nav-secondary" href="https://credible-answers.github.io/" target="_blank" rel="noopener">Credible Answers ↗</a></li>
-    <li><a class="btn-nav" href="https://github.com/chaisemartinPackages" target="_blank" rel="noopener">GitHub ↗</a></li>
+    <li><a class="btn-nav" href="https://github.com/Credible-Answers" target="_blank" rel="noopener">GitHub ↗</a></li>
   </ul>
 </nav>
 
@@ -260,7 +260,7 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
           <button class="snippet-copy" onclick="copyCmd(this,'whichDIDshouldIuse Y G T D')">⎘</button>
         </div>
       </div>
-      <p class="stata-foot">Requires <code>distinct</code> (SSC). Not yet on SSC for your version? Check the <a href="https://github.com/chaisemartinPackages" target="_blank" rel="noopener">Credible Answers GitHub</a>.</p>
+      <p class="stata-foot">Requires <code>distinct</code> (SSC). Not yet on SSC for your version? Check the <a href="https://github.com/Credible-Answers/Which-Difference-in-Differences-estimator-should-I-use" target="_blank" rel="noopener">GitHub repository</a>.</p>
     </div>
   </section>
 
@@ -526,9 +526,9 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
       <h3>de Chaisemartin &amp; D'Haultfœuille estimators</h3>
       <ol>
         <li><strong>de Chaisemartin, C. &amp; D'Haultfœuille, X. (2020).</strong> "Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects." <em>AER</em>, 110(9).<br><a href="https://sites.google.com/site/clementdechaisemartin/" target="_blank" rel="noopener">Author page, slides, Web Appendix</a></li>
-        <li><strong>de Chaisemartin &amp; D'Haultfœuille.</strong> Event-study estimator behind <code>did_multiplegt_dyn</code> &mdash; binary or nonbinary, absorbing or not, with lagged effects.<br><a href="https://cran.r-project.org/web/packages/DIDmultiplegtDYN/DIDmultiplegtDYN.pdf" target="_blank" rel="noopener">R: DIDmultiplegtDYN</a> &middot; <a href="https://arxiv.org/pdf/2510.19426" target="_blank" rel="noopener">Companion note</a> &middot; <a href="https://github.com/chaisemartinPackages/did_multiplegt" target="_blank" rel="noopener">Repo</a></li>
-        <li><strong>de Chaisemartin, D'Haultfœuille, Pasquier &amp; Vazquez-Bare (2022).</strong> "DiD for Continuous Treatments and Instruments with Stayers." Basis for <code>did_multiplegt_stat</code>.<br><a href="https://github.com/chaisemartinPackages/did_multiplegt" target="_blank" rel="noopener">Repo &amp; docs</a></li>
-        <li><strong>de Chaisemartin &amp; D'Haultfœuille.</strong> HAD estimator behind <code>did_had</code>, quasi- and no-quasi-untreated cases.<br><a href="https://github.com/chaisemartinPackages/did_multiplegt" target="_blank" rel="noopener">Repo &amp; docs</a></li>
+        <li><strong>de Chaisemartin &amp; D'Haultfœuille.</strong> Event-study estimator behind <code>did_multiplegt_dyn</code> &mdash; binary or nonbinary, absorbing or not, with lagged effects.<br><a href="https://cran.r-project.org/web/packages/DIDmultiplegtDYN/DIDmultiplegtDYN.pdf" target="_blank" rel="noopener">R: DIDmultiplegtDYN</a> &middot; <a href="https://arxiv.org/pdf/2510.19426" target="_blank" rel="noopener">Companion note</a> &middot; <a href="https://github.com/Credible-Answers/did_multiplegt_dyn" target="_blank" rel="noopener">Repo</a></li>
+        <li><strong>de Chaisemartin, D'Haultfœuille, Pasquier &amp; Vazquez-Bare (2022).</strong> "DiD for Continuous Treatments and Instruments with Stayers." Basis for <code>did_multiplegt_stat</code>.<br><a href="https://github.com/Credible-Answers/did_multiplegt_stat" target="_blank" rel="noopener">Repo &amp; docs</a></li>
+        <li><strong>de Chaisemartin &amp; D'Haultfœuille.</strong> HAD estimator behind <code>did_had</code>, quasi- and no-quasi-untreated cases.<br><a href="https://github.com/Credible-Answers/did_had" target="_blank" rel="noopener">Repo &amp; docs</a></li>
         <li><strong>de Chaisemartin &amp; D'Haultfœuille (2020).</strong> Original <code>did_multiplegt</code> (now <code>old</code> mode), superseded by <code>dyn</code>.<br><a href="https://cran.rstudio.com/web/packages/DIDmultiplegt/DIDmultiplegt.pdf" target="_blank" rel="noopener">Docs</a></li>
       </ol>
       <h3>Other modern DiD estimators</h3>
@@ -550,7 +550,7 @@ footer a{color:var(--muted); text-decoration:underline; text-underline-offset:2p
 </main>
 
 <footer>
-  Maintained by <a href="https://credible-answers.github.io/" target="_blank" rel="noopener">Credible Answers</a> &middot; <a href="https://github.com/chaisemartinPackages" target="_blank" rel="noopener">Package source</a>
+  Maintained by <a href="https://credible-answers.github.io/" target="_blank" rel="noopener">Credible Answers</a> &middot; <a href="https://github.com/Credible-Answers" target="_blank" rel="noopener">Package source</a>
 </footer>
 
 <script>
