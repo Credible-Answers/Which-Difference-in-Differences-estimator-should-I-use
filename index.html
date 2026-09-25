@@ -77,7 +77,13 @@ hr.divider{border:none; border-top:1px solid var(--border); margin:0;}
 
 /* SECTIONS */
 section{max-width:1240px; margin:0 auto; padding:4rem 2rem;}
-section#compare{max-width:1480px;}
+section#compare{max-width:1600px; padding-left:clamp(1rem,3vw,2.5rem); padding-right:clamp(1rem,3vw,2.5rem);}
+section#compare > .sec-label, section#compare > .sec-title{text-align:center;}
+section#compare > .sec-sub{max-width:760px; margin-left:auto; margin-right:auto; margin-bottom:2.4rem;}
+section#compare > .legend{justify-content:center;}
+section#stata > .sec-title{text-align:center;}
+section#stata > .sec-sub{max-width:760px; margin-left:auto; margin-right:auto; margin-bottom:2rem;}
+section#stata > .stata-panel{max-width:760px; margin-left:auto; margin-right:auto;}
 section.alt{background:var(--surface); border-top:1px solid var(--border); border-bottom:1px solid var(--border);}
 .sec-label{font-family:var(--mono); font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); margin-bottom:.4rem;}
 .sec-title{font-family:var(--serif); font-size:clamp(1.5rem,2.6vw,2.1rem); letter-spacing:-.02em; margin-bottom:.8rem; line-height:1.18;}
