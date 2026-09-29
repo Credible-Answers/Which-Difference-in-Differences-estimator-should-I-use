@@ -319,29 +319,26 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
               </svg>
             </td>
             <td class="estim">
-              <span class="cond">If there are never-treated units</span>
-              <ul><li>A DID estimator using the never-treated as controls, scaled by the average dose received by treated units</li></ul>
-              <span class="cond">Without untreated units, with some quasi-untreated units</span>
-              <ul><li>A DID estimator using the quasi-untreated as controls, scaled by the average dose received by treated units</li></ul>
-              <span class="cond">Without untreated or quasi-untreated units</span>
-              <ul><li>A DID estimator using the least-treated as controls, scaled by the average dose received by treated units. NB: without untreated or quasi-untreated units, this estimator relies on a homogeneous effect assumption.</li></ul>
+              <span class="cond">Are there never-treated units?</span>
+              <ul>
+                <li><strong>Yes:</strong> a DID estimator using the never-treated as controls, scaled by the average dose received by treated units.</li>
+                <li><strong>No:</strong> are there quasi-untreated units?
+                  <ul>
+                    <li><strong>Yes:</strong> a DID estimator using the quasi-untreated as controls, scaled by the average dose received by treated units.</li>
+                    <li><strong>No:</strong> a DID estimator using the least-treated as controls, scaled by the average dose received by treated units. NB: this estimator relies on a homogeneous effect assumption.</li>
+                  </ul>
+                </li>
+              </ul>
             </td>
             <td class="methods">
-              <span class="cond">If there are never-treated units</span>
+              <span class="cond">Never-treated units: yes</span>
               <div class="pkg-item">
                 <div class="pkg-item-head"><span class="pkg-badge">ivregress 2sls &Delta;y (d = 1(d&gt;0))</span>
-                  <div class="lang-toggle" data-pkg="ivreg"><button class="lang-btn" data-lang="stata">Stata</button></div>
+                  <div class="lang-toggle" data-pkg="ivreg"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="r">R</button><button class="lang-btn" data-lang="py">Python</button></div>
                 </div>
                 <pre class="pkg-code" hidden></pre>
               </div>
-              <span class="cond">Without untreated, with quasi-untreated units</span>
-              <div class="pkg-item">
-                <div class="pkg-item-head"><span class="pkg-badge">did_had</span>
-                  <div class="lang-toggle" data-pkg="had"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="r">R</button><button class="lang-btn" data-lang="py">Python</button></div>
-                </div>
-                <pre class="pkg-code" hidden></pre>
-              </div>
-              <span class="cond">Without untreated or quasi-untreated units</span>
+              <span class="cond">Never-treated units: no (with or without quasi-untreated units)</span>
               <div class="pkg-item">
                 <div class="pkg-item-head"><span class="pkg-badge">did_had</span>
                   <div class="lang-toggle" data-pkg="had"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="r">R</button><button class="lang-btn" data-lang="py">Python</button></div>
@@ -545,7 +542,9 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
       stata: '* rel_* = relative-time dummies; never_treat = 1 if never treated\n* first_treat = missing for never-treated units\neventstudyinteract Y rel_*, cohort(first_treat)\n  control_cohort(never_treat)\n  absorb(i.G i.T) vce(cluster G)'
     },
     ivreg: {
-      stata: '* dY = first difference of Y between the two periods\ngen treated = (D > 0)\nivregress 2sls dY (D = treated), vce(robust)'
+      stata: '* dY = first difference of Y between the two periods\ngen treated = (D > 0)\nivregress 2sls dY (D = treated), vce(robust)',
+      r: 'library(fixest)\ndf$treated <- as.numeric(df$D > 0)\n# ssc(K.adj = FALSE): no small-sample adjustment, as in ivregress\nfeols(dY ~ 1 | D ~ treated, data = df,\n  vcov = "hetero", ssc = ssc(K.adj = FALSE))',
+      py: 'import pyfixest as pf\ndf["treated"] = (df["D"] > 0).astype(int)\n# k_adj=False: no small-sample adjustment, as in ivregress\npf.feols("dY ~ 1 | D ~ treated", data=df, vcov="hetero",\n  ssc=pf.ssc(k_adj=False)).summary()'
     },
     dyn: {
       stata: 'did_multiplegt_dyn Y G T D, effects(5) placebo(5) cluster(G)',
