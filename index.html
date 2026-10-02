@@ -45,17 +45,18 @@ nav.topnav{position:sticky; top:env(safe-area-inset-top,0px); z-index:200; backg
 .nav-logo{font-family:var(--serif); font-size:1.15rem; color:var(--accent); text-decoration:none; flex-shrink:0;}
 .nav-toggle{display:none; border:1px solid var(--accent-border); background:var(--accent-light); color:var(--accent); border-radius:4px; padding:.36rem .65rem; font-family:var(--sans); font-size:.78rem; font-weight:600; cursor:pointer;}
 .nav-toggle:hover{background:var(--accent-border);}
-.nav-links{display:flex; gap:1.5rem; list-style:none; align-items:center;}
+.nav-links{display:flex; gap:.5rem; list-style:none; align-items:center;}
 .nav-links a{text-decoration:none; color:var(--muted); font-size:.85rem; font-weight:500; transition:color .2s; white-space:nowrap;}
 .nav-links a:hover, .nav-links a.active{color:var(--text);}
 .btn-nav{background:var(--accent); color:#fff!important; padding:.38rem .95rem; border-radius:5px; font-size:.8rem!important; font-weight:600!important;}
 .btn-nav:hover{opacity:.85;}
+.nav-links a.btn-nav.active{box-shadow:0 0 0 2px var(--accent-border);}
 .btn-nav-secondary{color:var(--accent)!important; border:1px solid var(--accent-border); background:var(--accent-light); padding:.34rem .85rem; border-radius:5px; font-size:.8rem!important; font-weight:600!important; white-space:nowrap;}
 .btn-nav-secondary:hover{background:var(--accent-border);}
 @media (max-width:860px){
   nav.topnav{padding:.55rem 1.1rem; height:auto; min-height:var(--navw); flex-wrap:wrap;}
   .nav-toggle{display:block;}
-  .nav-links{display:none; flex:1 0 100%; flex-direction:column; align-items:stretch; gap:.2rem; padding:.6rem 0 .2rem;}
+  .nav-links{display:none; flex:1 0 100%; flex-direction:column; align-items:stretch; gap:.3rem; padding:.6rem 0 .2rem;}
   .nav-links.open{display:flex;}
   .nav-links a{display:block; width:100%; padding:.42rem .6rem; border-radius:4px;}
   .nav-links a:not(.btn-nav):not(.btn-nav-secondary):hover{background:var(--surface);}
@@ -165,6 +166,8 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
 .legend i{display:inline-block; width:14px; height:9px; border:1px solid var(--border);}
 .skip{position:absolute; left:-9999px;}
 .skip:focus{left:10px; top:10px; background:var(--accent); color:#fff; padding:8px 14px; z-index:100; border-radius:5px;}
+
+/* several-treatments note */
 .multi-note{max-width:900px; margin:2rem auto 0; background:var(--bg); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:8px; padding:1.2rem 1.5rem; font-size:.86rem; color:var(--muted); line-height:1.65;}
 .multi-note-title{font-family:var(--mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); font-weight:600; margin-bottom:.5rem;}
 .multi-note ul{margin:.6rem 0 0; padding-left:18px;}
@@ -174,6 +177,7 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
 .multi-note ul ul{margin:.35rem 0 .2rem; padding-left:18px;}
 .multi-note ul ul li{margin-bottom:.3rem;}
 .multi-note > p:last-child{margin-top:.6rem;}
+</style>
 </head>
 <body>
 
@@ -182,7 +186,7 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
 <nav class="topnav">
   <a class="nav-logo" href="https://credible-answers.github.io/">Credible Answers</a>
   <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" id="navToggleBtn">Menu ☰</button>
-   <ul class="nav-links" id="primary-navigation">
+  <ul class="nav-links" id="primary-navigation">
     <li><a class="btn-nav" href="#compare">Identify your design, then pick an estimator</a></li>
     <li><a class="btn-nav" href="#stata">Identify your design automatically in Stata</a></li>
     <li><a class="btn-nav" href="#references">References</a></li>
@@ -469,7 +473,8 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
       <span><i style="background:var(--accent);opacity:.35;border-color:transparent"></i>Low dose</span>
       <span><i style="background:var(--accent);border-color:transparent"></i>Treated / high dose</span>
     </div>
-            <div class="multi-note">
+
+    <div class="multi-note">
       <p class="multi-note-title">Note: designs with several treatments</p>
       <p>The table above only considers designs with a single treatment. Sometimes researchers want to estimate the effects of several treatments.</p>
       <ul>
@@ -523,7 +528,7 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
     <h2 class="sec-title">References</h2>
     <div class="refs">
       <ol>
-       <li><strong>Borusyak, K., Jaravel, X., &amp; Spiess, J. (2024).</strong> "Revisiting Event Study Designs: Robust and Efficient Estimation." <em>Review of Economic Studies</em>, 91(6), 3253&ndash;3285. <a href="https://doi.org/10.1093/restud/rdae007" target="_blank" rel="noopener">DOI</a></li>
+        <li><strong>Borusyak, K., Jaravel, X., &amp; Spiess, J. (2024).</strong> "Revisiting Event Study Designs: Robust and Efficient Estimation." <em>Review of Economic Studies</em>, 91(6), 3253&ndash;3285. <a href="https://doi.org/10.1093/restud/rdae007" target="_blank" rel="noopener">DOI</a></li>
         <li><strong>Callaway, B., &amp; Sant'Anna, P. H. C. (2021).</strong> "Difference-in-Differences with Multiple Time Periods." <em>Journal of Econometrics</em>, 225(2), 200&ndash;230. <a href="https://doi.org/10.1016/j.jeconom.2020.12.001" target="_blank" rel="noopener">DOI</a></li>
         <li><strong>Cantoni, E., &amp; Pons, V. (2021).</strong> "Strict ID Laws Don't Stop Voters: Evidence from a U.S. Nationwide Panel, 2008&ndash;2018." <em>Quarterly Journal of Economics</em>, 136(4), 2615&ndash;2660.</li>
         <li><strong>de Chaisemartin, C., &amp; D'Haultfœuille, X. (2020).</strong> "Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects." <em>American Economic Review</em>, 110(9), 2964&ndash;2996. <a href="https://doi.org/10.1257/aer.20181169" target="_blank" rel="noopener">DOI</a></li>
