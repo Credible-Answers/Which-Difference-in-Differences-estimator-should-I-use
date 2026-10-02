@@ -171,7 +171,9 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
 .multi-note li{margin-bottom:.5rem;}
 .multi-note li strong{color:var(--text);}
 .multi-note code{background:var(--accent-light); color:var(--accent); padding:.05em .35em; border-radius:3px;}
-</style>
+.multi-note ul ul{margin:.35rem 0 .2rem; padding-left:18px;}
+.multi-note ul ul li{margin-bottom:.3rem;}
+.multi-note > p:last-child{margin-top:.6rem;}
 </head>
 <body>
 
@@ -467,16 +469,27 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
       <span><i style="background:var(--accent);opacity:.35;border-color:transparent"></i>Low dose</span>
       <span><i style="background:var(--accent);border-color:transparent"></i>Treated / high dose</span>
     </div>
-        <div class="multi-note">
+            <div class="multi-note">
       <p class="multi-note-title">Note: designs with several treatments</p>
       <p>The table above only considers designs with a single treatment. Sometimes researchers want to estimate the effects of several treatments.</p>
       <ul>
-        <li><strong>Several treatments.</strong> Instead of one binary treatment, units may receive <em>K</em>&nbsp;&ge;&nbsp;2 treatments, or a treatment with several categories. For instance, one may want to separately estimate the effects of medical and recreational marijuana laws in the US (see, e.g., Meinhofer, Witman, Hinde and Simon, 2021): so far, states have always passed the former before the latter. Another example is voter ID laws in the US, where less strict laws are typically passed before stricter ones (see Cantoni and Pons, 2021). A last example is anti-deforestation policies in the Amazon rainforest, where plots of land are first put into a concession, and then some concessions get certified (see Rico-Straffon, Wang, Panlasigui, Loucks, Swenson and Pfaff, 2023). See Section 8.3.5.4 of the textbook.</li>
-        <li><strong>Spillovers.</strong> Spillover effects can be accounted for by treating exposure to other units' treatment as an additional treatment.</li>
-        <li><strong>TWFE regressions with several treatments.</strong> The <code>twowayfeweights</code> Stata and R commands compute the weights attached to TWFE regressions with several treatments, using the <code>other_treatments</code> option.</li>
-        <li><strong>If lagged effects can be ruled out.</strong> Heterogeneity-robust estimators of the effect of each treatment can be computed with <code>did_multiplegt</code> (see Section 8.3.5.4 of the textbook).</li>
-        <li><strong>Dynamic treatment effects.</strong> To estimate dynamic effects, use <code>did_multiplegt_dyn</code>.</li>
+        <li><strong>Definition.</strong> Units may receive <em>K</em>&nbsp;&ge;&nbsp;2 treatments, or a treatment with several categories. This framework also allows accounting for spillover effects, by treating exposure to other units' treatment as an additional treatment.</li>
+        <li><strong>Examples.</strong>
+          <ul>
+            <li>Medical and recreational marijuana laws in the US, whose effects one may want to estimate separately. So far, states have always passed the former before the latter (see, e.g., Meinhofer, Witman, Hinde and Simon, 2021).</li>
+            <li>Voter ID laws in the US, where less strict laws are typically passed before stricter ones (see Cantoni and Pons, 2021).</li>
+            <li>Anti-deforestation policies in the Amazon rainforest, where plots of land are first put into a concession, and then some concessions get certified (see Rico-Straffon, Wang, Panlasigui, Loucks, Swenson and Pfaff, 2023).</li>
+          </ul>
+        </li>
+        <li><strong>Estimation.</strong>
+          <ul>
+            <li><em>TWFE regressions:</em> the <code>twowayfeweights</code> Stata and R commands compute the weights attached to TWFE regressions with several treatments, using the <code>other_treatments</code> option.</li>
+            <li><em>If lagged effects can be ruled out:</em> heterogeneity-robust estimators of the effect of each treatment can be computed with <code>did_multiplegt</code>.</li>
+            <li><em>Dynamic effects with sequential treatments:</em> the additional effect of the second treatment can be estimated with <code>did_multiplegt_dyn</code>, restricting the sample to the (<em>g</em>,&nbsp;<em>t</em>)s that have received the first treatment, and including the adoption date of the first treatment in the <code>trends_nonparam</code> option.</li>
+          </ul>
+        </li>
       </ul>
+      <p>See Section 8.3.5.4 of the textbook for more details.</p>
     </div>
   </section>
 
