@@ -165,6 +165,12 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
 .legend i{display:inline-block; width:14px; height:9px; border:1px solid var(--border);}
 .skip{position:absolute; left:-9999px;}
 .skip:focus{left:10px; top:10px; background:var(--accent); color:#fff; padding:8px 14px; z-index:100; border-radius:5px;}
+.multi-note{max-width:900px; margin:2rem auto 0; background:var(--bg); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:8px; padding:1.2rem 1.5rem; font-size:.86rem; color:var(--muted); line-height:1.65;}
+.multi-note-title{font-family:var(--mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); font-weight:600; margin-bottom:.5rem;}
+.multi-note ul{margin:.6rem 0 0; padding-left:18px;}
+.multi-note li{margin-bottom:.5rem;}
+.multi-note li strong{color:var(--text);}
+.multi-note code{background:var(--accent-light); color:var(--accent); padding:.05em .35em; border-radius:3px;}
 </style>
 </head>
 <body>
@@ -175,11 +181,11 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
   <a class="nav-logo" href="https://credible-answers.github.io/">Credible Answers</a>
   <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation" id="navToggleBtn">Menu ☰</button>
   <ul class="nav-links" id="primary-navigation">
-    <li><a href="#compare">Comparison table</a></li>
-    <li><a href="#stata">Stata</a></li>
+    <li><a href="#compare">Identify your design, then pick an estimator</a></li>
+    <li><a href="#stata">Identify your design automatically in Stata</a></li>
     <li><a href="#references">References</a></li>
-    <li><a class="btn-nav-secondary" href="https://credible-answers.github.io/" target="_blank" rel="noopener">Credible Answers ↗</a></li>
-    <li><a class="btn-nav" href="https://github.com/Credible-Answers" target="_blank" rel="noopener">GitHub ↗</a></li>
+    <li><a class="btn-nav-secondary" href="https://credible-answers.github.io/" target="_blank" rel="noopener">Credible Answers </a></li>
+    <li><a class="btn-nav" href="https://github.com/Credible-Answers" target="_blank" rel="noopener">GitHub </a></li>
   </ul>
 </nav>
 
@@ -191,11 +197,14 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
     <p class="lede">There is no universally best Difference-in-Differences estimator. The right estimator depends on the design of your study and the effect you want to estimate.</p>
     <p class="lede">Is treatment binary or nonbinary? Absorbing, meaning that once treated one always remains treated, or reversible? Do treated groups adopt at different dates? Can treatment change more than once? Is it plausible that lagged treatments still affect the current outcome? Are there untreated or not-yet-treated groups, stayers, or quasi-untreated observations? This guide first helps you characterize your research design, and then explains which modern DiD estimators are compatible with it.</p>
     <p class="lede">Stata users can also run <span class="kbd">whichDIDshouldIuse</span> for an automatic characterization of their design &mdash; see <a href="#stata">below</a>.</p>
-    <div class="hero-actions">
-      <a class="btn-primary" href="#compare">Comparison table</a>
-      <a class="btn-secondary" href="#stata">Identify my design in Stata</a>
-    </div>
+     <!-- 
+     <div class="hero-actions">
+     <a class="btn-primary" href="#compare">Identify your design, then pick an estimator</a>
+     <a class="btn-secondary" href="#stata">Identify my design in Stata</a>
+     </div>
+     -->
   </div>
+
 
   <hr class="divider">
 
@@ -374,7 +383,7 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
               </svg>
             </td>
             <td class="estim">
-              <span class="cond">To allow for effects of lagged treatments</span>
+              <span class="cond">Estimators allowing for effects of lagged treatments</span>
               <ul><li>DID estimator comparing first-time switchers (units whose treatment changes for the first time) to not-yet switchers (units whose treatment has not changed yet), controlling for units' treatment at period one</li></ul>
               <span class="cond">If lagged effects can plausibly be ruled out</span>
               <ul>
@@ -383,7 +392,7 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
               </ul>
             </td>
             <td class="methods">
-              <span class="cond">To allow for effects of lagged treatments</span>
+              <span class="cond">Estimators allowing for effects of lagged treatments</span>
               <div class="pkg-item">
                 <div class="pkg-item-head"><span class="pkg-badge">did_multiplegt_dyn</span>
                   <div class="lang-toggle" data-pkg="dyn"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="r">R</button><button class="lang-btn" data-lang="py">Python</button></div>
@@ -458,6 +467,17 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
       <span><i style="background:var(--accent);opacity:.35;border-color:transparent"></i>Low dose</span>
       <span><i style="background:var(--accent);border-color:transparent"></i>Treated / high dose</span>
     </div>
+        <div class="multi-note">
+      <p class="multi-note-title">Note: designs with several treatments</p>
+      <p>The table above only considers designs with a single treatment. Sometimes researchers want to estimate the effects of several treatments.</p>
+      <ul>
+        <li><strong>Several treatments.</strong> Instead of one binary treatment, units may receive <em>K</em>&nbsp;&ge;&nbsp;2 treatments, or a treatment with several categories. For instance, one may want to separately estimate the effects of medical and recreational marijuana laws in the US (see, e.g., Meinhofer, Witman, Hinde and Simon, 2021): so far, states have always passed the former before the latter. Another example is voter ID laws in the US, where less strict laws are typically passed before stricter ones (see Cantoni and Pons, 2021). A last example is anti-deforestation policies in the Amazon rainforest, where plots of land are first put into a concession, and then some concessions get certified (see Rico-Straffon, Wang, Panlasigui, Loucks, Swenson and Pfaff, 2023). See Section 8.3.5.4 of the textbook.</li>
+        <li><strong>Spillovers.</strong> Spillover effects can be accounted for by treating exposure to other units' treatment as an additional treatment.</li>
+        <li><strong>TWFE regressions with several treatments.</strong> The <code>twowayfeweights</code> Stata and R commands compute the weights attached to TWFE regressions with several treatments, using the <code>other_treatments</code> option.</li>
+        <li><strong>If lagged effects can be ruled out.</strong> Heterogeneity-robust estimators of the effect of each treatment can be computed with <code>did_multiplegt</code> (see Section 8.3.5.4 of the textbook).</li>
+        <li><strong>Dynamic treatment effects.</strong> To estimate dynamic effects, use <code>did_multiplegt_dyn</code>.</li>
+      </ul>
+    </div>
   </section>
 
   <section id="stata">
@@ -490,16 +510,20 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
     <h2 class="sec-title">References</h2>
     <div class="refs">
       <ol>
-        <li><strong>Borusyak, K., Jaravel, X., &amp; Spiess, J. (2024).</strong> "Revisiting Event Study Designs: Robust and Efficient Estimation." <em>Review of Economic Studies</em>, 91(6), 3253&ndash;3285. <a href="https://doi.org/10.1093/restud/rdae007" target="_blank" rel="noopener">DOI</a></li>
+       <li><strong>Borusyak, K., Jaravel, X., &amp; Spiess, J. (2024).</strong> "Revisiting Event Study Designs: Robust and Efficient Estimation." <em>Review of Economic Studies</em>, 91(6), 3253&ndash;3285. <a href="https://doi.org/10.1093/restud/rdae007" target="_blank" rel="noopener">DOI</a></li>
         <li><strong>Callaway, B., &amp; Sant'Anna, P. H. C. (2021).</strong> "Difference-in-Differences with Multiple Time Periods." <em>Journal of Econometrics</em>, 225(2), 200&ndash;230. <a href="https://doi.org/10.1016/j.jeconom.2020.12.001" target="_blank" rel="noopener">DOI</a></li>
+        <li><strong>Cantoni, E., &amp; Pons, V. (2021).</strong> "Strict ID Laws Don't Stop Voters: Evidence from a U.S. Nationwide Panel, 2008&ndash;2018." <em>Quarterly Journal of Economics</em>, 136(4), 2615&ndash;2660.</li>
         <li><strong>de Chaisemartin, C., &amp; D'Haultfœuille, X. (2020).</strong> "Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects." <em>American Economic Review</em>, 110(9), 2964&ndash;2996. <a href="https://doi.org/10.1257/aer.20181169" target="_blank" rel="noopener">DOI</a></li>
         <li><strong>de Chaisemartin, C., D'Haultfœuille, X., Pasquier, F., &amp; Vazquez-Bare, G. (2022).</strong> "Difference-in-Differences for Continuous Treatments and Instruments with Stayers." Working paper, SSRN 4011782. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4011782" target="_blank" rel="noopener">SSRN</a></li>
+        <li><strong>de Chaisemartin, C., &amp; D'Haultfœuille, X. (2023).</strong> "Two-Way Fixed Effects and Differences-in-Differences Estimators with Several Treatments." <em>Journal of Econometrics</em>, 236(2), 105480.</li>
         <li><strong>de Chaisemartin, C., D'Haultfœuille, X., &amp; Vazquez-Bare, G. (2024).</strong> "Difference-in-Difference Estimators with Continuous Treatments and No Stayers." <em>AEA Papers and Proceedings</em>, 114, 610&ndash;613.</li>
         <li><strong>de Chaisemartin, C., Ciccia, D., D'Haultfœuille, X., &amp; Knau, F. (2026).</strong> "Difference-in-Differences Estimators When No Unit Remains Untreated." Working paper, arXiv:2405.04465. <a href="https://arxiv.org/abs/2405.04465" target="_blank" rel="noopener">arXiv</a></li>
         <li><strong>de Chaisemartin, C., &amp; D'Haultfœuille, X. (2026).</strong> "Difference-in-Differences Estimators of Intertemporal Treatment Effects." <em>Review of Economics and Statistics</em>, 108(4), 863&ndash;880. <a href="https://direct.mit.edu/rest/article-abstract/doi/10.1162/rest_a_01414/119488/Difference-in-Differences-Estimators-of?redirectedFrom=fulltext" target="_blank" rel="noopener">Journal page</a></li>
         <li><strong>Gardner, J. (2021).</strong> "Two-Stage Differences in Differences." Working paper. <a href="https://arxiv.org/pdf/2109.05913v1" target="_blank" rel="noopener">arXiv</a></li>
         <li><strong>Goodman-Bacon, A. (2021).</strong> "Difference-in-Differences with Variation in Treatment Timing." <em>Journal of Econometrics</em>, 225(2), 254&ndash;277. <a href="https://doi.org/10.1016/j.jeconom.2021.03.014" target="_blank" rel="noopener">DOI</a></li>
         <li><strong>Liu, L., Wang, Y., &amp; Xu, Y. (2024).</strong> "A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data." <em>American Journal of Political Science</em>, 68(1), 160&ndash;176. <a href="https://doi.org/10.1111/ajps.12723" target="_blank" rel="noopener">DOI</a></li>
+        <li><strong>Meinhofer, A., Witman, A. E., Hinde, J. M., &amp; Simon, K. (2021).</strong> "Marijuana Liberalization Policies and Perinatal Health." <em>Journal of Health Economics</em>, 80, 102537.</li>
+        <li><strong>Rico-Straffon, J., Wang, Z., Panlasigui, S., Loucks, C. J., Swenson, J., &amp; Pfaff, A. (2023).</strong> "Forest Concessions and Eco-Certifications in the Peruvian Amazon: Deforestation Impacts of Logging Rights and Logging Restrictions." <em>Journal of Environmental Economics and Management</em>, 118, 102780.</li>
         <li><strong>Sun, L., &amp; Abraham, S. (2021).</strong> "Estimating Dynamic Treatment Effects in Event Studies with Heterogeneous Treatment Effects." <em>Journal of Econometrics</em>, 225(2), 175&ndash;199. <a href="https://doi.org/10.1016/j.jeconom.2020.09.006" target="_blank" rel="noopener">DOI</a></li>
       </ol>
     </div>
