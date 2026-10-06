@@ -489,7 +489,7 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
         <li><strong>Estimation.</strong>
           <ul>
             <li><em>TWFE regressions:</em> the <code>twowayfeweights</code> Stata and R commands compute the weights attached to TWFE regressions with several treatments, using the <code>other_treatments</code> option.</li>
-            <li><em>If lagged effects can be ruled out:</em> heterogeneity-robust estimators of the effect of each treatment can be computed with <code>did_multiplegt</code>.</li>
+            <li><em>If lagged effects can be ruled out:</em> heterogeneity-robust estimators of the effect of each treatment can be computed with <code>did_multiplegt_stat</code>.</li>
             <li><em>Dynamic effects with sequential treatments:</em> the additional effect of the second treatment can be estimated with <code>did_multiplegt_dyn</code>, restricting the sample to the (<em>g</em>,&nbsp;<em>t</em>)s that have received the first treatment, and including the adoption date of the first treatment in the <code>trends_nonparam</code> option.</li>
           </ul>
         </li>
