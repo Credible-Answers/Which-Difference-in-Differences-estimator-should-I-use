@@ -115,9 +115,14 @@ table.compare th,table.compare td{text-align:left; padding:.85rem 1rem; border-b
 table.compare th{font-family:var(--mono); font-size:.68rem; letter-spacing:.04em; text-transform:uppercase; font-weight:600; color:var(--muted); background:var(--bg); border-bottom:1px solid var(--border);}
 table.compare tr:last-child td{border-bottom:none;}
 table.compare td.design{font-weight:600; max-width:130px; font-family:var(--mono); font-size:.82rem; color:var(--accent);}
-table.compare td.desc{color:var(--muted); max-width:220px;}
-table.compare td.desc ul{margin:0; padding-left:16px;}
-table.compare td.desc li{margin-bottom:3px;}
+table.compare td.desc{color:var(--muted); max-width:280px; min-width:240px;}
+table.compare td.desc .def{margin:0 0 .7rem; color:var(--text);}
+table.compare td.desc .examples{border-top:1px dashed var(--border); padding-top:.55rem;}
+table.compare td.desc .ex-label{display:block; font-family:var(--mono); font-size:.62rem; text-transform:uppercase; letter-spacing:.06em; color:var(--accent); font-weight:600; margin-bottom:.35rem;}
+table.compare td.desc .ex{font-size:.76rem; line-height:1.45; margin:0 0 .45rem;}
+table.compare td.desc .ex:last-child{margin-bottom:0;}
+table.compare td.desc .ex strong{color:var(--text); font-weight:600;}
+table.compare td.desc .ex-ref{font-family:var(--mono); font-size:.68rem; color:var(--accent); white-space:nowrap;}
 table.compare td.diagram{width:170px; min-width:170px;}
 table.compare td.diagram svg{display:block; width:100%; height:auto;}
 table.compare td.methods{max-width:none; min-width:230px;}
@@ -220,13 +225,19 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
     <p class="sec-sub">The table below lists the designs reviewed in the textbook <a href="https://sites.google.com/site/clementdechaisemartin/" target="_blank" rel="noopener"><em>Causal Inference with Differences-in-Differences: Credible Answers to Hard Questions</em></a> by de Chaisemartin and D'Haultfœuille. For each design, it lists possible estimators, restricting attention to heterogeneity-robust estimators that only rely on no-anticipation and parallel-trends assumptions. Most commands and packages listed below can be used to conduct pre-trend tests of those assumptions.</p>
     <div class="table-scroll">
       <table class="compare" id="compareTable">
-        <thead><tr><th>Name</th><th>Definition</th><th>Treatment pattern</th><th>Estimators</th><th>Commands &amp; packages</th><th>Further reading</th></tr></thead>
+        <thead><tr><th>Name</th><th>Definition &amp; examples</th><th>Treatment pattern</th><th>Estimators</th><th>Commands &amp; packages</th><th>Further reading</th></tr></thead>
         <tbody>
 
           <!-- 1. Canonical -->
           <tr id="compare-classical">
             <td class="design">Canonical DID design</td>
-            <td class="desc">Treatment is binary, absorbing, there are never-treated units, and there is no variation in treatment timing: all treated units start getting treated at the same date.</td>
+            <td class="desc">
+              <p class="def">Treatment is binary, absorbing, there are never-treated units, and there is no variation in treatment timing: all treated units start getting treated at the same date.</p>
+              <div class="examples"><span class="ex-label">Examples</span>
+                <p class="ex"><strong>Minimum wage.</strong> New Jersey raised its minimum wage in 1992, Pennsylvania did not; fast-food employment did not fall. <span class="ex-ref">Card &amp; Krueger (1994)</span></p>
+                <p class="ex"><strong>Party rhetoric.</strong> Denmark's government turned pessimistic about the deficit in 2010; its partisans grew more concerned. <span class="ex-ref">Bisgaard &amp; Slothuus (2018)</span></p>
+              </div>
+            </td>
             <td class="diagram">
               <svg viewBox="0 0 160 40" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One unit switches to treated at a common date; the other stays untreated the whole time.">
                 <rect x="0" y="4" width="70" height="10" fill="none" stroke="var(--border)"/>
@@ -258,7 +269,13 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
           <!-- 2. Staggered adoption -->
           <tr id="compare-staggered">
             <td class="design">Staggered adoption design</td>
-            <td class="desc">Treatment is binary, absorbing, and there is variation in treatment timing.</td>
+            <td class="desc">
+              <p class="def">Treatment is binary, absorbing, and there is variation in treatment timing.</p>
+              <div class="examples"><span class="ex-label">Examples</span>
+                <p class="ex"><strong>Free trade agreements.</strong> Country pairs sign FTAs at different dates and rarely repeal them; FTAs raise bilateral trade. <span class="ex-ref">Baier &amp; Bergstrand (2007)</span></p>
+                <p class="ex"><strong>Unilateral divorce.</strong> Introduced at different dates across Western Europe; it raises divorce rates. <span class="ex-ref">Kneip &amp; Bauer (2009)</span></p>
+              </div>
+            </td>
             <td class="diagram">
               <svg viewBox="0 0 160 46" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three units switch to treated at three different dates.">
                 <rect x="0" y="2" width="40" height="9" fill="none" stroke="var(--border)"/>
@@ -321,7 +338,13 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
           <!-- 3. HAD -->
           <tr id="compare-had">
             <td class="design">Heterogeneous adoption design</td>
-            <td class="desc">All units are untreated at the start of the panel, all treated units become treated at the same date, and treated units receive heterogeneous treatment doses.</td>
+           <td class="desc">
+              <p class="def">All units are untreated at the start of the panel, all treated units become treated at the same date, and treated units receive heterogeneous treatment doses.</p>
+              <div class="examples"><span class="ex-label">Examples</span>
+                <p class="ex"><strong>Minimum wage.</strong> German districts more exposed to a national minimum wage saw larger wage gains and no employment losses. <span class="ex-ref">Dustmann et al. (2022)</span></p>
+                <p class="ex"><strong>Cancer treatment.</strong> US cancer programs adopted a new chemotherapy at different rates; high adopters cut short-term mortality more. <span class="ex-ref">Melamed et al. (2021)</span></p>
+              </div>
+            </td>
             <td class="diagram">
               <svg viewBox="0 0 160 46" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three units are all dosed on the same date but at three different intensities.">
                 <rect x="0" y="2" width="70" height="9" fill="none" stroke="var(--border)"/>
@@ -368,7 +391,13 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
           <!-- 4. Staggered first switch -->
           <tr id="compare-general">
             <td class="design">Staggered first switch design</td>
-            <td class="desc">Designs where groups experience their first treatment change at different points in time. These designs nest staggered adoption designs. But staggered first switch designs also encompass more general designs, where the treatment may be nonbinary and/or non-absorbing.</td>
+           <td class="desc">
+              <p class="def">Designs where groups experience their first treatment change at different points in time. These designs nest staggered adoption designs. But staggered first switch designs also encompass more general designs, where the treatment may be nonbinary and/or non-absorbing.</p>
+              <div class="examples"><span class="ex-label">Examples</span>
+                <p class="ex"><strong>Democratic governors.</strong> US states move in and out of Democratic governorship (binary, non-absorbing); effect on policy liberalism. <span class="ex-ref">Caughey, Xu &amp; Warshaw (2017)</span></p>
+                <p class="ex"><strong>Business taxes.</strong> German municipalities start at different tax rates and change them repeatedly; effect on wages. <span class="ex-ref">Fuest, Peichl &amp; Siegloch (2018)</span></p>
+              </div>
+            </td>
             <td class="diagram">
               <svg viewBox="0 0 160 58" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Four units with nonbinary treatment. Two start untreated: one moves to a low dose, back to untreated, then to a high dose; the other stays untreated until the last period, when it moves to a low dose. Two start at a low dose: one moves to a high dose and back to the low dose, where it stays; the other stays at the low dose until the last period, when it moves to untreated.">
                 <!-- unit 1: W L W D D -->
@@ -438,7 +467,12 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
           <!-- 5. Other -->
           <tr id="compare-other">
             <td class="design">Other designs</td>
-            <td class="desc">Designs that do not fall into any of the designs above. For instance, the treatment of every unit could change between every pair of time periods.</td>
+           <td class="desc">
+              <p class="def">Designs that do not fall into any of the designs above. For instance, the treatment of every unit could change between every pair of time periods.</p>
+              <div class="examples"><span class="ex-label">Example</span>
+                <p class="ex"><strong>Weather.</strong> Rainfall or temperature differs across locations and changes every year, e.g. to study agricultural yields. <span class="ex-ref">Deschênes &amp; Greenstone (2007)</span></p>
+              </div>
+            </td>
             <td class="diagram">
               <svg viewBox="0 0 160 46" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three units whose treatment changes between every pair of dates.">
                 <!-- unit 1: W D L D W -->
