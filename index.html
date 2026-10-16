@@ -185,7 +185,7 @@ table.compare td.methods .pkg-note{font-size:.74rem; color:var(--muted); line-he
 table.compare th,table.compare td{padding:.7rem .8rem;}
 table.compare td.desc{max-width:340px; min-width:300px;}
 table.compare td.diagram{width:140px; min-width:140px;}
-table.compare td.estim{min-width:330px; max-width:380px;}
+table.compare td.estim{min-width:420px; max-width:500px;}
 table.compare td.methods{min-width:300px;}
 table.compare td.further{max-width:220px;}
 table.compare td.further a{display:inline;}
@@ -297,6 +297,7 @@ table.compare td.further a{display:inline;}
               <ul>
                 <li>Heterogeneity-robust DID estimators using the never-treated, the not-yet-treated or the last-treated as the control group</li>
                 <li>Imputation estimators</li>
+                <li>In Chapter 6 of the textbook, we conduct a meta-analysis of 12 political science articles using a staggered adoption design. Heterogeneity-robust DID estimators and imputation estimators are always close to each other, except in the two papers where pre-trend tests are rejected. We recommend using DID estimators using not-yet-treated as controls: they are more transparent than imputation estimators, and in our meta-analysis they are slightly less noisy than imputation estimators.</li>
               </ul>
             </td>
             <td class="methods">
@@ -338,8 +339,14 @@ table.compare td.further a{display:inline;}
                 </div>
                 <pre class="pkg-code" hidden></pre>
               </div>
+              <div class="pkg-item">
+                <div class="pkg-item-head"><span class="pkg-badge">jwdid <em>(etwfe in R)</em></span>
+                  <div class="lang-toggle" data-pkg="jwdid"><button class="lang-btn" data-lang="stata">Stata</button><button class="lang-btn" data-lang="r">R</button></div>
+                </div>
+                <pre class="pkg-code" hidden></pre>
+              </div>
             </td>
-            <td class="further"><span class="chap">Ch. 6 of the textbook</span><a href="https://doi.org/10.1257/aer.20181169" target="_blank" rel="noopener">de Chaisemartin &amp; D'Haultfœuille (2020)</a><a href="https://direct.mit.edu/rest/article-abstract/doi/10.1162/rest_a_01414/119488/Difference-in-Differences-Estimators-of?redirectedFrom=fulltext" target="_blank" rel="noopener">de Chaisemartin &amp; D'Haultfœuille (2026)</a><a href="https://doi.org/10.1016/j.jeconom.2020.12.001" target="_blank" rel="noopener">Callaway &amp; Sant'Anna (2021)</a><a href="https://doi.org/10.1016/j.jeconom.2020.09.006" target="_blank" rel="noopener">Sun &amp; Abraham (2021)</a><a href="https://arxiv.org/pdf/2109.05913v1" target="_blank" rel="noopener">Gardner (2021)</a><a href="https://doi.org/10.1111/ajps.12723" target="_blank" rel="noopener">Liu, Wang &amp; Xu (2024)</a><a href="https://doi.org/10.1093/restud/rdae007" target="_blank" rel="noopener">Borusyak, Jaravel &amp; Spiess (2024)</a></td>
+            <td class="further"><span class="chap">Ch. 6 of the textbook</span><a href="https://doi.org/10.1257/aer.20181169" target="_blank" rel="noopener">de Chaisemartin &amp; D'Haultfœuille (2020)</a><a href="https://direct.mit.edu/rest/article-abstract/doi/10.1162/rest_a_01414/119488/Difference-in-Differences-Estimators-of?redirectedFrom=fulltext" target="_blank" rel="noopener">de Chaisemartin &amp; D'Haultfœuille (2026)</a><a href="https://doi.org/10.1016/j.jeconom.2020.12.001" target="_blank" rel="noopener">Callaway &amp; Sant'Anna (2021)</a><a href="https://doi.org/10.1016/j.jeconom.2020.09.006" target="_blank" rel="noopener">Sun &amp; Abraham (2021)</a><a href="https://arxiv.org/pdf/2109.05913v1" target="_blank" rel="noopener">Gardner (2021)</a><a href="https://doi.org/10.1111/ajps.12723" target="_blank" rel="noopener">Liu, Wang &amp; Xu (2024)</a><a href="https://doi.org/10.1093/restud/rdae007" target="_blank" rel="noopener">Borusyak, Jaravel &amp; Spiess (2024)</a><a href="https://doi.org/10.1007/s00181-025-02807-z" target="_blank" rel="noopener">Wooldridge (2025)</a></td>
           </tr>
 
           <!-- 3. HAD -->
@@ -569,21 +576,30 @@ table.compare td.further a{display:inline;}
     <h2 class="sec-title">References</h2>
     <div class="refs">
       <ol>
+        <li><strong>Baier, S. L., &amp; Bergstrand, J. H. (2007).</strong> "Do Free Trade Agreements Actually Increase Members' International Trade?" <em>Journal of International Economics</em>, 71(1), 72&ndash;95.</li>
         <li><strong>Borusyak, K., Jaravel, X., &amp; Spiess, J. (2024).</strong> "Revisiting Event Study Designs: Robust and Efficient Estimation." <em>Review of Economic Studies</em>, 91(6), 3253&ndash;3285. <a href="https://doi.org/10.1093/restud/rdae007" target="_blank" rel="noopener">DOI</a></li>
         <li><strong>Callaway, B., &amp; Sant'Anna, P. H. C. (2021).</strong> "Difference-in-Differences with Multiple Time Periods." <em>Journal of Econometrics</em>, 225(2), 200&ndash;230. <a href="https://doi.org/10.1016/j.jeconom.2020.12.001" target="_blank" rel="noopener">DOI</a></li>
         <li><strong>Cantoni, E., &amp; Pons, V. (2021).</strong> "Strict ID Laws Don't Stop Voters: Evidence from a U.S. Nationwide Panel, 2008&ndash;2018." <em>Quarterly Journal of Economics</em>, 136(4), 2615&ndash;2660.</li>
+        <li><strong>Caughey, D., Xu, Y., &amp; Warshaw, C. (2017).</strong> "Incremental Democracy: The Policy Effects of Partisan Control of State Government." <em>Journal of Politics</em>, 79(4), 1342&ndash;1358.</li>
         <li><strong>de Chaisemartin, C., &amp; D'Haultfœuille, X. (2020).</strong> "Two-Way Fixed Effects Estimators with Heterogeneous Treatment Effects." <em>American Economic Review</em>, 110(9), 2964&ndash;2996. <a href="https://doi.org/10.1257/aer.20181169" target="_blank" rel="noopener">DOI</a></li>
         <li><strong>de Chaisemartin, C., D'Haultfœuille, X., Pasquier, F., &amp; Vazquez-Bare, G. (2022).</strong> "Difference-in-Differences for Continuous Treatments and Instruments with Stayers." Working paper, SSRN 4011782. <a href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4011782" target="_blank" rel="noopener">SSRN</a></li>
         <li><strong>de Chaisemartin, C., &amp; D'Haultfœuille, X. (2023).</strong> "Two-Way Fixed Effects and Differences-in-Differences Estimators with Several Treatments." <em>Journal of Econometrics</em>, 236(2), 105480.</li>
         <li><strong>de Chaisemartin, C., D'Haultfœuille, X., &amp; Vazquez-Bare, G. (2024).</strong> "Difference-in-Difference Estimators with Continuous Treatments and No Stayers." <em>AEA Papers and Proceedings</em>, 114, 610&ndash;613.</li>
         <li><strong>de Chaisemartin, C., Ciccia, D., D'Haultfœuille, X., &amp; Knau, F. (2026).</strong> "Difference-in-Differences Estimators When No Unit Remains Untreated." Working paper, arXiv:2405.04465. <a href="https://arxiv.org/abs/2405.04465" target="_blank" rel="noopener">arXiv</a></li>
         <li><strong>de Chaisemartin, C., &amp; D'Haultfœuille, X. (2026).</strong> "Difference-in-Differences Estimators of Intertemporal Treatment Effects." <em>Review of Economics and Statistics</em>, 108(4), 863&ndash;880. <a href="https://direct.mit.edu/rest/article-abstract/doi/10.1162/rest_a_01414/119488/Difference-in-Differences-Estimators-of?redirectedFrom=fulltext" target="_blank" rel="noopener">Journal page</a></li>
+        <li><strong>Deschênes, O., &amp; Greenstone, M. (2007).</strong> "The Economic Impacts of Climate Change: Evidence from Agricultural Output and Random Fluctuations in Weather." <em>American Economic Review</em>, 97(1), 354&ndash;385.</li>
+        <li><strong>Dustmann, C., Lindner, A., Schönberg, U., Umkehrer, M., &amp; vom Berge, P. (2022).</strong> "Reallocation Effects of the Minimum Wage." <em>Quarterly Journal of Economics</em>, 137(1), 267&ndash;328.</li>
+        <li><strong>Fuest, C., Peichl, A., &amp; Siegloch, S. (2018).</strong> "Do Higher Corporate Taxes Reduce Wages? Micro Evidence from Germany." <em>American Economic Review</em>, 108(2), 393&ndash;418.</li>
         <li><strong>Gardner, J. (2021).</strong> "Two-Stage Differences in Differences." Working paper. <a href="https://arxiv.org/pdf/2109.05913v1" target="_blank" rel="noopener">arXiv</a></li>
         <li><strong>Goodman-Bacon, A. (2021).</strong> "Difference-in-Differences with Variation in Treatment Timing." <em>Journal of Econometrics</em>, 225(2), 254&ndash;277. <a href="https://doi.org/10.1016/j.jeconom.2021.03.014" target="_blank" rel="noopener">DOI</a></li>
+        <li><strong>Kneip, T., &amp; Bauer, G. (2009).</strong> "Did Unilateral Divorce Laws Raise Divorce Rates in Western Europe?" <em>Journal of Marriage and Family</em>, 71(3), 592&ndash;607.</li>
         <li><strong>Liu, L., Wang, Y., &amp; Xu, Y. (2024).</strong> "A Practical Guide to Counterfactual Estimators for Causal Inference with Time-Series Cross-Sectional Data." <em>American Journal of Political Science</em>, 68(1), 160&ndash;176. <a href="https://doi.org/10.1111/ajps.12723" target="_blank" rel="noopener">DOI</a></li>
+        <li><strong>Melamed, A., et al. (2021).</strong> <em>JAMA Oncology</em>. <a href="https://doi.org/10.1001/jamaoncol.2021.4252" target="_blank" rel="noopener">DOI</a></li>
         <li><strong>Meinhofer, A., Witman, A. E., Hinde, J. M., &amp; Simon, K. (2021).</strong> "Marijuana Liberalization Policies and Perinatal Health." <em>Journal of Health Economics</em>, 80, 102537.</li>
         <li><strong>Rico-Straffon, J., Wang, Z., Panlasigui, S., Loucks, C. J., Swenson, J., &amp; Pfaff, A. (2023).</strong> "Forest Concessions and Eco-Certifications in the Peruvian Amazon: Deforestation Impacts of Logging Rights and Logging Restrictions." <em>Journal of Environmental Economics and Management</em>, 118, 102780.</li>
+        <li><strong>Snow, J. (1856).</strong> "On the Mode of Communication of Cholera." <em>Edinburgh Medical Journal</em>, 1(7), 668&ndash;670.</li>
         <li><strong>Sun, L., &amp; Abraham, S. (2021).</strong> "Estimating Dynamic Treatment Effects in Event Studies with Heterogeneous Treatment Effects." <em>Journal of Econometrics</em>, 225(2), 175&ndash;199. <a href="https://doi.org/10.1016/j.jeconom.2020.09.006" target="_blank" rel="noopener">DOI</a></li>
+        <li><strong>Wooldridge, J. M. (2025).</strong> "Two-Way Fixed Effects, the Two-Way Mundlak Regression, and Difference-in-Differences Estimators." <em>Empirical Economics</em>, 69(5), 2545&ndash;2587. <a href="https://doi.org/10.1007/s00181-025-02807-z" target="_blank" rel="noopener">DOI</a></li>
       </ol>
     </div>
   </section>
@@ -658,6 +674,10 @@ table.compare td.further a{display:inline;}
     },
     fect: {
       r: 'library(fect)\nout <- fect(Y ~ D, data = df,\n  index = c("G", "T"), method = "fe")'
+    },
+    jwdid: {
+      stata: '* first_treat = 0 for never-treated units\njwdid Y, ivar(G) tvar(T) gvar(first_treat)\nestat event',
+      r: 'library(etwfe)\nmod <- etwfe(fml = Y ~ 0, tvar = T, gvar = first_treat,\n  data = df, vcov = ~G)\nemfx(mod, type = "event")'
     }
   };
   document.querySelectorAll('.lang-btn').forEach(btn => {
